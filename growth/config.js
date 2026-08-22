@@ -15,7 +15,7 @@ window.KEA_GROWTH = {
   echosPageUrl: "../echos-wisdom.html",
 
   /** Google Apps Script Web App URL. Empty = 402.2.1.0 */
-  sheetWebhook: "https://script.google.com/macros/s/AKfycbz-jduq9tUZHyiDPveux5jugkFS1pl0LwF1_glE3f5c4dBQg5FqdxMbgHsPosrvi8zO/exec",
+  sheetWebhook: "https://script.google.com/macros/s/AKfycbzxddBbHPKRSMcEgWI93ghtNZKrlCpV60X4D6U17xrQvrjnuTqbwYHi5w0zoHrp9YX3Jw/exec",
   /** Optional published CSV/JSON URL for dashboard pull */
   sheetCsvUrl: "",
 

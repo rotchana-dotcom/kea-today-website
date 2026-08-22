@@ -1,0 +1,86 @@
+Energy Today funnel — status 22 Aug 2026 (stop here, continue tomorrow)
+
+============================================================
+BUILT (exists, do not rebuild)
+============================================================
+- Public funnel on kea.today: https://www.kea.today/growth/
+  Sales page, tracked go.html links (YouTube / Facebook / Instagram / TikTok / website / reading), dashboard.
+- Click log: Cloudflare /api/funnel + Google Sheet tab "events" (~90 days).
+- Apps Script web app (doGet / doPost) talking to the Sheet.
+- Public Play Store scrape (listing only, e.g. "10+" downloads) — not Console money.
+- Echos captions on N97 can use tracked kea.today/growth/go.html links (after your Sync).
+- Fault codes 402.* for this funnel (not guessing leaks).
+
+Do not create a new Sheet, new Cloud project, or new service account tomorrow.
+
+============================================================
+CONNECTED (working)
+============================================================
+Sheet:
+  https://docs.google.com/spreadsheets/d/1qsodD80Go2IPl1hALlO56uEg4N5OEcEnIfkMBfV_D-8/edit
+
+Web app /exec (kea.today is pointed at this):
+  https://script.google.com/macros/s/AKfycbz-jduq9tUZHyiDPveux5jugkFS1pl0LwF1_glE3f5c4dBQg5FqdxMbgHsPosrvi8zO/exec
+
+Google account for the Sheet / Apps Script: dingdingmillion@gmail.com
+(Use Chrome. Outlook/Live hijacks Deploy.)
+
+Play robot (already invited, Active):
+  energy-today-billing@energy-today.iam.gserviceaccount.com
+  JSON is in Apps Script: Project Settings → Script properties → PLAY_SA_JSON
+  Cloud API: Google Play Android Developer API = Enabled (androidpublisher.googleapis.com)
+  Project: energy-today
+
+Real app vs test app:
+  USE:    Energy Today  com.kea.energytoday
+  IGNORE: Energy Today app  space.manus.energy_today.t20251227002435  (Manus test)
+
+Repo with the script: kea-today-website/growth/apps-script/Code.gs
+Site repo auto-deploys on git push (Cloudflare Pages keatoday1). Do not Direct Upload.
+
+============================================================
+NOT CONNECTED (tomorrow)
+============================================================
+Play Console numbers (exact installs, payers, revenue) are NOT on the dashboard yet.
+
+Play Console login WORKS (22 Aug evening):
+  source: play_console
+  App linked: com.kea.energytoday
+  3 subscription products
+  Latest /exec: AKfycbzxddBbHPKRSMcEgWI93ghtNZKrlCpV60X4D6U17xrQvrjnuTqbwYHi5w0zoHrp9YX3Jw
+
+Also not set:
+  PLAY_GCS_BUCKET  (Play Console → Download reports → bucket like pubsite_prod_rev_…)
+  Without that, even a successful Console login will not fill dollars.
+
+There are TWO Apps Script projects named Energy Today Funnel. Use the one that matches the /exec URL above. The old editor that still starts with "Standalone web app" is the wrong window — syncPlayToSheet will not appear there.
+
+============================================================
+TOMORROW — do only this (in order)
+============================================================
+1. Chrome, dingdingmillion. Open the Apps Script project that matches the /exec URL (not the Standalone web app file).
+
+2. In Cursor, open Code.gs (about 490 lines). Confirm it contains:
+     /reviews?maxResults=1
+   Ctrl+A, Ctrl+C. Paste over Apps Script Editor. Save.
+
+3. Deploy → Manage deployments → pencil → New version. (Do not make a new deployment / new /exec unless Google forces it. If the URL changes, put the new /exec in the notepad and tell the assistant to point kea.today at it.)
+
+4. Function dropdown (next to Run, currently often says doGet) → syncPlayToSheet → Run → Allow if asked.
+
+5. Open the /exec URL. Want: "source":"play_console" and note containing "App linked: com.kea.energytoday".
+   If still inappproducts / migrate API: paste did not land. Stop. Do not add keys.
+
+6. Play Console → Download reports → copy Cloud Storage bucket id into Script properties as PLAY_GCS_BUCKET. Run syncPlayToSheet again. Dollars can lag 1–2 days in Google’s files.
+
+7. Phone: https://www.kea.today/growth/ → Test click. New row should appear on Sheet tab "events".
+
+Do not: new JSON keys, Enable Play Developer Reporting API, Cloud IAM Owner, or tick only the Manus app.
+
+============================================================
+DONE WHEN
+============================================================
+- /exec play.source is play_console
+- Growth page shows installs from Console (not only 10+)
+- Revenue/payers either from PLAY_GCS_BUCKET or still pasted by hand until reports exist
+- Test click writes a Sheet row
