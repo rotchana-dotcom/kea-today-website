@@ -64,7 +64,7 @@
         lines.push(readings + " readings vs many Play taps. People skip the reading — keep Play CTA above the fold.");
       }
 
-      if (revenue) lines.push("Revenue note: " + revenue);
+      if (revenue && /[0-9]/.test(String(revenue))) lines.push("Revenue note: " + revenue);
 
       return {
         leak: leak,

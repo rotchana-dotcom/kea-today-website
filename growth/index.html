@@ -120,18 +120,25 @@
   }
   function mergedFunnel() {
     var local = KeaGrowth.funnel();
-    if (edge && edge.ok && ((edge.clicks || 0) + (edge.readings || 0) + (edge.visits || 0) > 0)) {
-      return {
-        days: 90,
-        clicks: edge.clicks || 0,
-        readings: edge.readings || 0,
-        offers: edge.offers || 0,
-        bySource: edge.bySource || {},
-        byExp: local.byExp || {},
-        total: edge.clicks || 0
-      };
+    var remote = edge && edge.ok ? edge : {};
+    function mix(a, b) {
+      var out = {};
+      [a || {}, b || {}].forEach(function (obj) {
+        Object.keys(obj).forEach(function (k) {
+          out[k] = Math.max(out[k] || 0, obj[k] || 0);
+        });
+      });
+      return out;
     }
-    return local;
+    return {
+      days: 90,
+      clicks: Math.max(local.clicks || 0, remote.clicks || 0),
+      readings: Math.max(local.readings || 0, remote.readings || 0),
+      offers: Math.max(local.offers || 0, remote.offers || 0),
+      bySource: mix(local.bySource, remote.bySource),
+      byExp: local.byExp || {},
+      total: Math.max(local.total || 0, remote.clicks || 0)
+    };
   }
   function run() {
     var funnel = mergedFunnel();
@@ -143,7 +150,7 @@
       paid: pasteNum("paid"),
       revenue: document.getElementById("rev").textContent
     });
-    var srcLabel = edge && edge.store === "edge" ? "all kea.today visitors (edge)" : "this browser only";
+    var srcLabel = "this phone" + (edge && edge.ok ? " + kea.today" : "");
     document.getElementById("best").textContent = funnel.clicks
       ? rep.bestSource + " — " + rep.bestN + " events · " + srcLabel
       : "No clicks yet. Open a tracked link below (counts for everyone after this deploy).";
@@ -202,7 +209,9 @@
   }
   window.keaFunnelStats = function (data) {
     edge = data;
-    if (status) status.textContent = "Site-wide funnel also connected.";
+    if (status) status.textContent = (data.clicks || 0) > 0
+      ? "Site-wide clicks: " + data.clicks
+      : "Ready. Tap Test click — tracked clicks should become 1.";
     run();
     renderTracks(mergedFunnel());
   };
