@@ -130,7 +130,8 @@ export async function onRequestGet(context) {
     sum,
     {
       clicks: Math.max(sum.clicks || 0, (sheet && sheet.clicks) || 0),
-      bySource: Object.assign({}, (sheet && sheet.bySource) || {}, sum.bySource || {})
+      bySource: Object.assign({}, (sheet && sheet.bySource) || {}, sum.bySource || {}),
+      play: (sheet && sheet.play) || null
     }
   );
   const cb = url.searchParams.get("callback");

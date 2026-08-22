@@ -209,9 +209,17 @@
   }
   window.keaFunnelStats = function (data) {
     edge = data;
-    if (status) status.textContent = (data.clicks || 0) > 0
-      ? "Site-wide clicks: " + data.clicks
-      : "Ready. Tap Test click — tracked clicks should become 1.";
+    if (data.play && (data.play.installsLabel || data.play.installsGuess)) {
+      var inst = document.getElementById("installs");
+      if (inst && (inst.textContent === "—" || inst.textContent.trim() === "")) {
+        inst.textContent = data.play.installsLabel || String(data.play.installsGuess);
+      }
+    }
+    if (status) status.textContent = data.play && data.play.installsLabel
+      ? "Play listing: " + data.play.installsLabel + " installs (" + (data.play.source || "public") + "). Revenue still needs Console."
+      : ((data.clicks || 0) > 0
+        ? "Site-wide clicks: " + data.clicks
+        : "Ready. Tap Test click — tracked clicks should become 1.");
     run();
     renderTracks(mergedFunnel());
   };
