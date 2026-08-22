@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Growth — Energy Today funnel</title>
 <meta name="robots" content="noindex">
-<meta name="description" content="Sales dashboard for the Energy Today growth funnel.">
 <link rel="stylesheet" href="../styles.css">
 <link rel="stylesheet" href="growth.css">
 </head>
@@ -26,124 +25,114 @@
 </nav>
 
 <div class="growth-wrap">
-  <p class="growth-kicker">AI Growth Engine · Energy Today tenant</p>
-  <h1>Find where the customer is lost</h1>
-  <p class="hero-description" style="max-width: 700px;">
-    Posting stays on the studio app. This page is conversion only.
-    Numbers below are <strong>this browser</strong> until a Google Sheet is connected (90-day window).
-    Paste Play Console / revenue into the empty boxes — that is what customers will paste when we sell the app.
+  <p class="growth-kicker">AI Growth Engine · salesperson · 90-day window</p>
+  <h1>Money, leak, next push</h1>
+  <p class="hero-description" style="max-width: 720px;">
+    Automated posting is separate. This engine measures conversion.
+    Paste Play Console figures. Clicks and readings are tracked automatically.
+    Google Sheet = shared 90-day brain (set <code>sheetWebhook</code>). Until then, this browser + <code>/api/track</code>.
   </p>
 
   <div class="stat-grid">
     <div class="stat-box money">
-      <h3>Money today</h3>
-      <div class="num" contenteditable="true">$</div>
-      <p class="hint">Placeholder — paste Play / Stripe figure. Sellable: customer pastes theirs.</p>
+      <h3>Revenue (paste)</h3>
+      <div class="num" id="rev" contenteditable="true">$</div>
     </div>
     <div class="stat-box">
-      <h3>New subscribers</h3>
-      <div class="num" contenteditable="true">—</div>
-      <p class="hint">From Play Console / app. Not guessed.</p>
+      <h3>Paying (paste)</h3>
+      <div class="num" id="paid" contenteditable="true">—</div>
     </div>
     <div class="stat-box">
-      <h3>Trials</h3>
-      <div class="num" contenteditable="true">—</div>
-      <p class="hint">Placeholder until app events are wired.</p>
+      <h3>Installs (paste)</h3>
+      <div class="num" id="installs" contenteditable="true">—</div>
     </div>
     <div class="stat-box">
-      <h3>App installs</h3>
-      <div class="num" contenteditable="true">—</div>
-      <p class="hint">Paste from Play Console (90-day). Clicks below are tracked here.</p>
+      <h3>Tracked clicks</h3>
+      <div class="num" id="clicks">0</div>
     </div>
     <div class="stat-box">
-      <h3>Tracked clicks (this device)</h3>
-      <div class="num" id="click-total">0</div>
-      <p class="hint">90-day local log. Sheet: see 402.2.1.0</p>
+      <h3>Free readings</h3>
+      <div class="num" id="readings">0</div>
+    </div>
+    <div class="stat-box">
+      <h3>Return offers shown</h3>
+      <div class="num" id="offers">0</div>
     </div>
   </div>
 
   <div class="panel">
-    <h2 style="color: #00ff9c; margin-bottom: 10px;">Best source (clicks here)</h2>
-    <p id="best-source" style="color: #b8bcc4;">No clicks yet.</p>
+    <h2 style="color: #00ff9c; margin-bottom: 8px;">🔥 Best source</h2>
+    <p id="best" style="color: #b8bcc4;">—</p>
   </div>
-
   <div class="panel warn">
-    <h2 style="color: #ffb020; margin-bottom: 10px;">Biggest opportunity</h2>
-    <p style="color: #b8bcc4; margin-bottom: 12px;">
-      Play Console numbers are still low — income needs installs then paying users.
-      Until Sheet + Play figures are in the boxes, the leak is <strong>unknown</strong> (do not guess).
-    </p>
-    <p class="fault" id="opp-fault"></p>
-    <p style="color: #b8bcc4; margin-top: 12px;">
-      <strong>AI next step (manual until Sheet is live):</strong>
-      Put tracked links in Echos captions instead of a raw Play URL, then compare clicks vs Play listing visitors.
-    </p>
+    <h2 style="color: #ffb020; margin-bottom: 8px;">⚠️ Leak + AI push</h2>
+    <p id="action" style="color: #fff; font-size: 1.15rem; margin-bottom: 12px;"></p>
+    <ul id="lines" style="color: #b8bcc4; padding-left: 18px; line-height: 1.7;"></ul>
+    <p class="fault" id="fault" style="margin-top: 12px;"></p>
+    <button type="button" class="btn-primary" id="recompute" style="margin-top: 16px;">Recompute from pasted numbers</button>
   </div>
 
   <div class="panel">
-    <h2 style="color: #00ff9c; margin-bottom: 14px;">Tracked paths (wired for Energy Today)</h2>
+    <h2 style="color: #00ff9c; margin-bottom: 14px;">Tracked paths (use in posts)</h2>
     <div class="track-list" id="tracks"></div>
   </div>
-
   <div class="panel muted">
-    <h2 style="margin-bottom: 10px;">Customer placeholders (when we sell this)</h2>
-    <p style="color: #b8bcc4; line-height: 1.7;">
-      Paste Google Play URL · App Store URL · website · TikTok / YouTube / Facebook / Instagram · Sheet webhook.
-      Your tenant is already filled in <code>config.js</code>.
-    </p>
-    <p class="fault" style="margin-top: 12px;">Faults: 402.page.line.char — <a href="FAULTS.md" style="color: #00ff9c;">FAULTS.md</a></p>
+    <p style="color: #b8bcc4;">Sellable placeholders: paste Play URL, socials, Sheet webhook in <code>config.js</code>. Energy Today is already wired.</p>
+    <p class="fault" style="margin-top: 10px;"><a href="FAULTS.md" style="color: #00ff9c;">FAULTS.md</a> · Apps Script: <code>growth/apps-script/Code.gs</code></p>
   </div>
 </div>
 
 <script src="config.js"></script>
 <script src="growth.js"></script>
+<script src="salesperson.js"></script>
 <script>
 (function () {
-  var cfg = window.KEA_GROWTH || {};
-  var stats = KeaGrowth.countsBySource();
-  document.getElementById("click-total").textContent = stats.total;
-
-  var best = "none";
-  var bestN = 0;
-  Object.keys(stats.bySource).forEach(function (k) {
-    if (stats.bySource[k] > bestN) {
-      bestN = stats.bySource[k];
-      best = k;
-    }
-  });
-  var bestEl = document.getElementById("best-source");
-  if (stats.total === 0) {
-    bestEl.textContent = "No local clicks yet. Open a tracked link below.";
-    document.getElementById("opp-fault").textContent = KeaGrowth.fault(
-      "402.4.1.0",
-      "No Sheet and no local clicks. Use tracked links or paste Play Console numbers."
-    );
-  } else {
-    bestEl.textContent = best + " — " + bestN + " click(s) in " + stats.days + " days (this browser).";
-    document.getElementById("opp-fault").textContent = KeaGrowth.fault(
-      "402.2.1.0",
-      "Google Sheet webhook empty. Clicks are not in a 90-day shared log yet."
-    );
+  function pasteNum(id) {
+    var t = document.getElementById(id).textContent.replace(/[^0-9.]/g, "");
+    return t ? Number(t) : NaN;
   }
+  function run() {
+    var funnel = KeaGrowth.funnel();
+    document.getElementById("clicks").textContent = funnel.clicks;
+    document.getElementById("readings").textContent = funnel.readings;
+    document.getElementById("offers").textContent = funnel.offers;
+    var rep = KeaGrowthSales.report(funnel, {
+      installs: pasteNum("installs"),
+      paid: pasteNum("paid"),
+      revenue: document.getElementById("rev").textContent
+    });
+    document.getElementById("best").textContent = funnel.clicks
+      ? rep.bestSource + " — " + rep.bestN + " events in " + funnel.days + " days (this browser / until Sheet)."
+      : "No local clicks yet.";
+    document.getElementById("action").textContent = rep.action;
+    var ul = document.getElementById("lines");
+    ul.innerHTML = "";
+    rep.lines.forEach(function (line) {
+      var li = document.createElement("li");
+      li.textContent = line;
+      ul.appendChild(li);
+    });
+    document.getElementById("fault").textContent = rep.code
+      ? KeaGrowth.fault(rep.code, "See FAULTS.md — no guessing.")
+      : "";
+  }
+  run();
+  document.getElementById("recompute").onclick = run;
+  ["rev", "paid", "installs"].forEach(function (id) {
+    document.getElementById(id).addEventListener("blur", run);
+  });
 
+  var cfg = window.KEA_GROWTH || {};
+  var funnel = KeaGrowth.funnel();
   var tracks = document.getElementById("tracks");
-  var keys = ["youtube", "facebook", "instagram", "tiktok", "website", "reading"];
-  keys.forEach(function (k) {
+  ["youtube", "facebook", "instagram", "tiktok", "website", "reading"].forEach(function (k) {
     var s = (cfg.sources && cfg.sources[k]) || { label: k };
-    var n = stats.bySource[k] || 0;
-    var a = document.createElement("div");
-    a.innerHTML =
-      "<strong>" +
-      s.label +
-      "</strong> — " +
-      n +
-      " clicks · <a href=\"go.html?src=" +
-      k +
-      "\">go.html?src=" +
-      k +
-      "</a>" +
-      (s.profile ? ' · <a href="' + s.profile + '" target="_blank" rel="noopener">profile</a>' : " · <span style=\"color:#8b9099\">paste profile when selling</span>");
-    tracks.appendChild(a);
+    var n = funnel.bySource[k] || 0;
+    var div = document.createElement("div");
+    div.innerHTML = "<strong>" + s.label + "</strong> · " + n +
+      ' · <a href="go.html?src=' + k + '">go.html?src=' + k + "</a>" +
+      (s.profile ? ' · <a href="' + s.profile + '" target="_blank" rel="noopener">profile</a>' : " · paste profile");
+    tracks.appendChild(div);
   });
 })();
 </script>

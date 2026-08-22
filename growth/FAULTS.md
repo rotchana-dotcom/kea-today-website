@@ -1,19 +1,19 @@
-# Growth Engine faults — Nexus format
+# Growth Engine faults — CATEGORY.PAGE.LINE.CHAR (402 = this funnel)
 
-Format: **CATEGORY.PAGE.LINE.CHAR**  
-Example: `402.2.56.101` = sales funnel (402), page 2, line 56, character 101.
-
-Category **402** is reserved for this Growth / Sales engine (payment-required / conversion).  
-Do not guess. Look up the code, read the note, try the suggestion.
+Do not guess. Read the note. Example: `402.2.56.101`.
 
 | Code | Meaning | What to do |
 |------|---------|------------|
-| **402.1.1.0** | `config.js` missing or `playStoreUrl` empty | Fill tenant Play / store URL. Sellable: customer pastes their listing. |
-| **402.1.2.0** | Unknown `src` on `go.html` | Use youtube, facebook, instagram, tiktok, website, or reading. |
-| **402.2.1.0** | Google Sheet webhook empty | Clicks stay in this browser only. Paste Apps Script URL into `sheetWebhook` when ready. |
-| **402.2.56.101** | Sheet append failed | Check webhook URL, sharing, and network. Click still redirects so the visitor is not blocked. |
-| **402.3.1.0** | Reading form missing name or birthday | Enter both, then submit. |
-| **402.4.1.0** | Dashboard has no Sheet and no local clicks | Open tracked links once, or paste Play Console numbers into the boxes (placeholders). |
-| **402.5.1.0** | N97 / cloud not used | Public funnel is on kea.today (Cloudflare). Dashboard is this `/growth/` folder. No N97 required for café testing. |
+| **402.1.1.0** | Play URL missing | Fill `playStoreUrl` in `config.js`. |
+| **402.1.2.0** | Unknown `src` | youtube, facebook, instagram, tiktok, website, reading, offer. |
+| **402.1.3.0** | `/api/track` got invalid JSON | Send a JSON object. |
+| **402.2.1.0** | No Sheet and no KV | Paste Apps Script URL into `sheetWebhook` and/or set Pages env `SHEET_WEBHOOK` + optional `GROWTH_KV`. Events still save in the browser. |
+| **402.2.56.101** | Sheet append failed | Check Web App deploy (Anyone), URL, network. Visitor still redirects to Play. |
+| **402.3.1.0** | Reading form incomplete | Name + birthday required. |
+| **402.4.1.0** | No clicks and no Play numbers | Use tracked links; paste Console installs. Do not invent a leak. |
+| **402.5.1.0** | N97 not required for public funnel | kea.today / Cloudflare. Sync N97 later only to change Echos captions. |
+| **402.6.1.0** | Clicks exist, installs not entered | Paste Play Console. Then decide CTA vs store listing. |
+| **402.6.2.0** | Installs exist, no payers entered | Return-visit 3-day trial is already on the reading page. Measure purchases in Play. |
+| **402.7.1.0** | App convert webhook unused | Energy Today should POST `/api/convert` on install/purchase when you add that in the Android app. |
 
-Notes are shown in the UI next to `[code]` so a fault is picked up without scrolling logs.
+N97 cron (optional, later): `kea-growth-engine/server/cron-ai.mjs` — AI only every few hours, not every minute.

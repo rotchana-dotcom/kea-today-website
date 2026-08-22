@@ -12,51 +12,44 @@
 <div class="growth-wrap">
   <p class="growth-kicker">Growth engine</p>
   <h1>Opening Energy Today…</h1>
-  <p id="status" class="hero-description">Preparing tracked link.</p>
+  <p id="status">Preparing tracked link.</p>
   <p id="fault" class="fault"></p>
 </div>
 <script src="config.js"></script>
 <script src="growth.js"></script>
 <script>
 (function () {
-  var params = new URLSearchParams(location.search);
-  var src = (params.get("src") || "website").toLowerCase();
+  var q = new URLSearchParams(location.search);
+  var src = (q.get("src") || "website").toLowerCase();
+  var campaign = q.get("c") || "";
   var cfg = window.KEA_GROWTH || {};
-  var allowed = cfg.sources || {};
   var status = document.getElementById("status");
   var faultEl = document.getElementById("fault");
 
   if (!cfg.playStoreUrl) {
     status.textContent = "Play Store URL is not set.";
-    faultEl.textContent = KeaGrowth.fault("402.1.1.0", "Fill playStoreUrl in config.js — see FAULTS.md");
+    faultEl.textContent = KeaGrowth.fault("402.1.1.0", "Fill playStoreUrl in config.js");
     return;
   }
-
-  if (!allowed[src]) {
-    faultEl.textContent = KeaGrowth.fault("402.1.2.0", "Unknown src. Use youtube, facebook, instagram, tiktok, website, or reading.");
+  if (!(cfg.sources && cfg.sources[src])) {
+    faultEl.textContent = KeaGrowth.fault("402.1.2.0", "Unknown src; using website.");
     src = "website";
   }
 
   var result = KeaGrowth.recordClick(src);
-  function go() {
-    var url = KeaGrowth.playUrl(src);
-    status.textContent = "Redirecting to Google Play (" + src + ").";
-    if (result && result.code) {
-      faultEl.textContent = KeaGrowth.fault(result.code, result.code === "402.2.1.0"
-        ? "Sheet not connected yet. Click saved in this browser only."
-        : "Sheet append failed. Visitor still sent to Play Store.");
-    }
-    window.location.replace(url);
+  KeaGrowth.record("play_tap", { src: src, campaign: campaign });
+  if (result && result.code) {
+    faultEl.textContent = KeaGrowth.fault(
+      result.code,
+      result.code === "402.2.1.0"
+        ? "Sheet not connected. Event saved here and sent to /api/track."
+        : "Sheet append may have failed. Visitor still goes to Play."
+    );
   }
-
-  if (result && typeof result.then === "function") {
-    result.then(function (r) {
-      result = r;
-      setTimeout(go, 400);
-    });
-  } else {
-    setTimeout(go, 400);
-  }
+  status.textContent = "Redirecting (" + src + (campaign ? " · " + campaign : "") + ")";
+  setTimeout(function () {
+    window.location.replace(KeaGrowth.playUrl(src, campaign));
+  }, 350);
 })();
 </script>
 </body>

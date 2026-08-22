@@ -1,11 +1,29 @@
-# KEA Growth Engine (extractable)
+# KEA Growth Engine
 
-This folder is the **sales / AI growth funnel** — not the posting studio and not the brand homepage.
+Sales / conversion funnel for Energy Today. Extract this folder (plus `functions/api/`) to sell as a web app.
 
-- **Live (café / anywhere):** https://www.kea.today/growth/
-- **Sales page:** https://www.kea.today/growth/reading.html
-- **Tracked go:** https://www.kea.today/growth/go.html?src=youtube
+## Live (no N97)
 
-Copy this whole `growth/` folder into its own repo when you sell the web app. Do not merge it into `kea-content-platform`.
+- Dashboard: https://www.kea.today/growth/
+- Reading: https://www.kea.today/growth/reading.html
+- Track: `https://www.kea.today/growth/go.html?src=youtube&c=POST_ID`
 
-N97 is for later (CapCut, studio). Public clicks stay on kea.today so the mini PC is not overloaded. Google Sheet (90 days+) is the next storage step (`sheetWebhook` in `config.js`).
+## Automation that is on
+
+- Per-platform tracked links (also wired in keaplatform Echos captions when you sync N97)
+- Event types: visit, click, play_tap, reading, return, offer_shown
+- Headline experiments A/B/C (daily rotate)
+- Return-visit 3-day trial offer
+- Rules-based salesperson (no paid AI)
+- `/api/track` and `/api/convert` Pages Functions
+- 90-day prune locally; Sheet script prunes to 90 days
+
+## You still paste (cannot invent)
+
+Play Console installs / revenue / payers. Google Apps Script URL for a shared Sheet.
+
+## Home later
+
+1. Cloudflare Pages → keatoday1 → Settings → Environment variables: `SHEET_WEBHOOK` after you deploy `apps-script/Code.gs`
+2. Optional KV binding `GROWTH_KV`
+3. Sync N97 so new Echos posts use tracked URLs (`channelPostLinks.ts`)
