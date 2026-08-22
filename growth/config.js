@@ -22,7 +22,7 @@ window.KEA_GROWTH = {
   sources: {
     youtube: { label: "YouTube", profile: "https://www.youtube.com/channel/UCnyl7BVETg7q6AmXMXyLzVg" },
     facebook: { label: "Facebook", profile: "https://www.facebook.com/profile.php?id=109822684772325" },
-    instagram: { label: "Instagram", profile: "https://www.instagram.com/" },
+    instagram: { label: "Instagram", profile: "" },
     tiktok: { label: "TikTok", profile: "" },
     website: { label: "kea.today", profile: "https://www.kea.today/" },
     reading: { label: "Free reading", profile: "" },

@@ -28,10 +28,11 @@
   <p class="growth-kicker">AI Growth Engine · salesperson · 90-day window</p>
   <h1>Money, leak, next push</h1>
   <p class="hero-description" style="max-width: 720px;">
-    Automated posting is separate. This engine measures conversion.
-    Paste Play Console figures. Clicks and readings are tracked automatically.
-    Google Sheet = shared 90-day brain (set <code>sheetWebhook</code>). Until then, this browser + <code>/api/track</code>.
+    Clicks are <strong>connected on kea.today</strong> (all visitors, ~90 days on the edge).
+    Type Play Console installs / payers / revenue once — they save on this phone.
+    Google Sheet is optional extra (home). Posting stays on the studio app.
   </p>
+  <p id="connect-status" class="fault" style="margin: 12px 0 0;"></p>
 
   <div class="stat-grid">
     <div class="stat-box money">
@@ -87,12 +88,44 @@
 <script src="salesperson.js"></script>
 <script>
 (function () {
+  var PLAY_KEY = "kea_growth_play_snapshot";
+  var edge = null;
+
+  try {
+    var saved = JSON.parse(localStorage.getItem(PLAY_KEY) || "{}");
+    if (saved.rev) document.getElementById("rev").textContent = saved.rev;
+    if (saved.paid) document.getElementById("paid").textContent = saved.paid;
+    if (saved.installs) document.getElementById("installs").textContent = saved.installs;
+  } catch (e) {}
+
   function pasteNum(id) {
     var t = document.getElementById(id).textContent.replace(/[^0-9.]/g, "");
     return t ? Number(t) : NaN;
   }
+  function savePlay() {
+    localStorage.setItem(PLAY_KEY, JSON.stringify({
+      rev: document.getElementById("rev").textContent,
+      paid: document.getElementById("paid").textContent,
+      installs: document.getElementById("installs").textContent
+    }));
+  }
+  function mergedFunnel() {
+    var local = KeaGrowth.funnel();
+    if (edge && edge.ok && ((edge.clicks || 0) + (edge.readings || 0) + (edge.visits || 0) > 0)) {
+      return {
+        days: 90,
+        clicks: edge.clicks || 0,
+        readings: edge.readings || 0,
+        offers: edge.offers || 0,
+        bySource: edge.bySource || {},
+        byExp: local.byExp || {},
+        total: edge.clicks || 0
+      };
+    }
+    return local;
+  }
   function run() {
-    var funnel = KeaGrowth.funnel();
+    var funnel = mergedFunnel();
     document.getElementById("clicks").textContent = funnel.clicks;
     document.getElementById("readings").textContent = funnel.readings;
     document.getElementById("offers").textContent = funnel.offers;
@@ -101,9 +134,10 @@
       paid: pasteNum("paid"),
       revenue: document.getElementById("rev").textContent
     });
+    var srcLabel = edge && edge.store === "edge" ? "all kea.today visitors (edge)" : "this browser only";
     document.getElementById("best").textContent = funnel.clicks
-      ? rep.bestSource + " — " + rep.bestN + " events in " + funnel.days + " days (this browser / until Sheet)."
-      : "No local clicks yet.";
+      ? rep.bestSource + " — " + rep.bestN + " events · " + srcLabel
+      : "No clicks yet. Open a tracked link below (counts for everyone after this deploy).";
     document.getElementById("action").textContent = rep.action;
     var ul = document.getElementById("lines");
     ul.innerHTML = "";
@@ -116,24 +150,48 @@
       ? KeaGrowth.fault(rep.code, "See FAULTS.md — no guessing.")
       : "";
   }
-  run();
-  document.getElementById("recompute").onclick = run;
+  document.getElementById("recompute").onclick = function () {
+    savePlay();
+    run();
+  };
   ["rev", "paid", "installs"].forEach(function (id) {
-    document.getElementById(id).addEventListener("blur", run);
+    document.getElementById(id).addEventListener("blur", function () {
+      savePlay();
+      run();
+    });
   });
 
   var cfg = window.KEA_GROWTH || {};
-  var funnel = KeaGrowth.funnel();
-  var tracks = document.getElementById("tracks");
-  ["youtube", "facebook", "instagram", "tiktok", "website", "reading"].forEach(function (k) {
-    var s = (cfg.sources && cfg.sources[k]) || { label: k };
-    var n = funnel.bySource[k] || 0;
-    var div = document.createElement("div");
-    div.innerHTML = "<strong>" + s.label + "</strong> · " + n +
-      ' · <a href="go.html?src=' + k + '">go.html?src=' + k + "</a>" +
-      (s.profile ? ' · <a href="' + s.profile + '" target="_blank" rel="noopener">profile</a>' : " · paste profile");
-    tracks.appendChild(div);
-  });
+  function renderTracks(funnel) {
+    var tracks = document.getElementById("tracks");
+    tracks.innerHTML = "";
+    ["youtube", "facebook", "instagram", "tiktok", "website", "reading"].forEach(function (k) {
+      var s = (cfg.sources && cfg.sources[k]) || { label: k };
+      var n = (funnel.bySource && funnel.bySource[k]) || 0;
+      var div = document.createElement("div");
+      div.innerHTML = "<strong>" + s.label + "</strong> · " + n +
+        ' · <a href="go.html?src=' + k + '">go.html?src=' + k + "</a>" +
+        (s.profile ? ' · <a href="' + s.profile + '" target="_blank" rel="noopener">profile</a>' : " · paste profile when selling");
+      tracks.appendChild(div);
+    });
+  }
+  renderTracks(KeaGrowth.funnel());
+  run();
+
+  var status = document.getElementById("connect-status");
+  fetch("/api/track")
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      edge = data;
+      status.textContent = data.ok
+        ? KeaGrowth.fault("402.5.1.0", "Click store connected on kea.today (edge). Sheet still optional.")
+        : KeaGrowth.fault(data.code || "402.2.1.0", data.note || "Track API not ready — hard-refresh after Cloudflare deploy.");
+      run();
+      renderTracks(mergedFunnel());
+    })
+    .catch(function () {
+      status.textContent = KeaGrowth.fault("402.2.1.0", "Could not reach /api/track yet. Wait for Pages deploy, then Ctrl+F5.");
+    });
 })();
 </script>
 </body>

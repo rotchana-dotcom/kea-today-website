@@ -7,7 +7,7 @@ Do not guess. Read the note. Example: `402.2.56.101`.
 | **402.1.1.0** | Play URL missing | Fill `playStoreUrl` in `config.js`. |
 | **402.1.2.0** | Unknown `src` | youtube, facebook, instagram, tiktok, website, reading, offer. |
 | **402.1.3.0** | `/api/track` got invalid JSON | Send a JSON object. |
-| **402.2.1.0** | No Sheet and no KV | Paste Apps Script URL into `sheetWebhook` and/or set Pages env `SHEET_WEBHOOK` + optional `GROWTH_KV`. Events still save in the browser. |
+| **402.2.1.0** | Track API / Sheet not ready | After deploy, clicks store on kea.today edge automatically. Sheet is optional. |
 | **402.2.56.101** | Sheet append failed | Check Web App deploy (Anyone), URL, network. Visitor still redirects to Play. |
 | **402.3.1.0** | Reading form incomplete | Name + birthday required. |
 | **402.4.1.0** | No clicks and no Play numbers | Use tracked links; paste Console installs. Do not invent a leak. |
