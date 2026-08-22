@@ -112,5 +112,16 @@ export async function onRequestGet(context) {
     }
   }
   const sum = await readSum(cache);
-  return json(Object.assign({ ok: true, store: "edge", code: null }, sum));
+  const payload = Object.assign({ ok: true, store: "edge", code: null }, sum);
+  const cb = url.searchParams.get("callback");
+  if (cb && /^[A-Za-z_][A-Za-z0-9_]*$/.test(cb)) {
+    return new Response(cb + "(" + JSON.stringify(payload) + ");", {
+      status: 200,
+      headers: {
+        "content-type": "application/javascript; charset=utf-8",
+        "cache-control": "no-store"
+      }
+    });
+  }
+  return json(payload);
 }

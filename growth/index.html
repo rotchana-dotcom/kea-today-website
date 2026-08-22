@@ -70,6 +70,7 @@
     <p id="action" style="color: #fff; font-size: 1.15rem; margin-bottom: 12px;">Paste installs if you have them. Click a path below to start measuring.</p>
     <ul id="lines" style="color: #b8bcc4; padding-left: 18px; line-height: 1.7;"></ul>
     <p class="fault" id="fault" style="margin-top: 12px;"></p>
+    <button type="button" class="btn-primary" id="test-click" style="margin-top: 16px; margin-right: 10px;">Test click (this phone)</button>
     <button type="button" class="btn-primary" id="recompute" style="margin-top: 16px;">Recompute from pasted numbers</button>
   </div>
 
@@ -97,6 +98,7 @@
 (function () {
   var PLAY_KEY = "kea_growth_play_snapshot";
   var edge = null;
+  var status = document.getElementById("connect-status");
 
   try {
     var saved = JSON.parse(localStorage.getItem(PLAY_KEY) || "{}");
@@ -157,6 +159,12 @@
       ? KeaGrowth.fault(rep.code, "See FAULTS.md — no guessing.")
       : "";
   }
+  document.getElementById("test-click").onclick = function () {
+    KeaGrowth.record("play_tap", { src: "website" });
+    run();
+    renderTracks(mergedFunnel());
+    if (status) status.textContent = "Test click saved on this phone. Tracked clicks should be above 0.";
+  };
   document.getElementById("recompute").onclick = function () {
     savePlay();
     run();
@@ -182,7 +190,6 @@
       tracks.appendChild(div);
     });
   }
-  var status = document.getElementById("connect-status");
   try {
     renderTracks(KeaGrowth.funnel());
     run();
@@ -190,22 +197,19 @@
     if (status) status.textContent = "[402.1.4.0] Dashboard script error: " + err.message;
   }
 
-  fetch("https://www.kea.today/api/funnel")
-    .then(function (r) {
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      return r.json();
-    })
-    .then(function (data) {
-      edge = data;
-      status.textContent = data.ok
-        ? "Funnel store connected. Clicks from go.html count here."
-        : KeaGrowth.fault(data.code || "402.2.1.0", data.note || "Funnel API returned an error.");
-      run();
-      renderTracks(mergedFunnel());
-    })
-    .catch(function () {
-      status.textContent = KeaGrowth.fault("402.2.1.0", "Phone-only counts until funnel API loads. Use www.kea.today/growth/ (not github.io).");
-    });
+  if (status) {
+    status.textContent = "Counts on this phone work now. Tap Test click, or a YouTube path, then come back.";
+  }
+  window.keaFunnelStats = function (data) {
+    edge = data;
+    if (status) status.textContent = "Site-wide funnel also connected.";
+    run();
+    renderTracks(mergedFunnel());
+  };
+  var js = document.createElement("script");
+  js.src = "https://www.kea.today/api/funnel?callback=keaFunnelStats&n=" + Date.now();
+  js.onerror = function () { /* phone-only is fine */ };
+  document.body.appendChild(js);
 })();
 </script>
 </body>
