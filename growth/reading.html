@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What is your energy today? — Energy Today</title>
+<meta name="description" content="Get a free Energy Today reading, then continue in the app on Google Play.">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="growth.css">
+</head>
+<body>
+
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="../index.html" class="logo-link">
+      <img src="../kea-logo.jpg" alt="Kea Logo" class="nav-logo">
+      <span class="logo-text">Kea Today</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="../echos-wisdom.html">Echos & Wisdom</a></li>
+      <li><a href="../energy-today-app.html">Energy Today</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="growth-wrap">
+  <p class="growth-kicker">Energy Today</p>
+  <h1>What is your energy today?</h1>
+  <p class="hero-description" style="max-width: 640px;">
+    Enter your name and birthday for a free snapshot. The full daily pattern lives in the Energy Today app — private, on your device.
+  </p>
+
+  <form class="growth-form" id="reading-form" style="margin-top: 28px;">
+    <label for="name">Name</label>
+    <input id="name" name="name" type="text" autocomplete="name" required>
+
+    <label for="bday">Birthday</label>
+    <input id="bday" name="bday" type="date" required>
+
+    <button type="submit" class="btn-primary">Get my free reading</button>
+    <p id="form-fault" class="fault" style="margin-top: 12px;"></p>
+  </form>
+
+  <div class="reading-result panel" id="result">
+    <h2 style="color: #00ff9c; margin-bottom: 12px;">Your snapshot</h2>
+    <p id="result-text" style="color: #b8bcc4; line-height: 1.7;"></p>
+    <p style="margin: 20px 0; color: #b8bcc4;">
+      The app tracks energy, mood, and focus across the day — and keeps the data on your phone.
+    </p>
+    <a id="play-cta" class="btn-primary" href="go.html?src=reading">Continue in Energy Today on Google Play</a>
+  </div>
+</div>
+
+<script src="config.js"></script>
+<script src="growth.js"></script>
+<script>
+document.getElementById("reading-form").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var name = document.getElementById("name").value.trim();
+  var bday = document.getElementById("bday").value;
+  var fault = document.getElementById("form-fault");
+  if (!name || !bday) {
+    fault.textContent = KeaGrowth.fault("402.3.1.0", "Name and birthday are required — see FAULTS.md");
+    return;
+  }
+  fault.textContent = "";
+  KeaGrowth.recordClick("reading");
+  var d = new Date(bday + "T12:00:00");
+  var day = d.getDate();
+  var tones = [
+    "Today favours a slower start and one clear decision.",
+    "Today favours focused work in short blocks, then rest.",
+    "Today favours a conversation you have been putting off.",
+    "Today favours protecting your energy before adding more tasks."
+  ];
+  var tone = tones[day % tones.length];
+  document.getElementById("result-text").textContent =
+    name + ", born " + d.toLocaleDateString() + ". " + tone +
+    " Open Energy Today to see your full pattern for this date.";
+  document.getElementById("result").classList.add("show");
+  document.getElementById("play-cta").href = KeaGrowth.playUrl("reading")
+    ? "go.html?src=reading"
+    : (window.KEA_GROWTH.playStoreUrl || "#");
+});
+</script>
+</body>
+</html>
