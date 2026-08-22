@@ -13,7 +13,12 @@ function json(data, status) {
   });
 }
 
-const STATS_REQ = new Request("https://www.kea.today/growth/__edge_summary_v1");
+const SHEET_DEFAULT =
+  "https://script.google.com/macros/s/AKfycbzxKgwi8ECKxYL3TOaOrA97lo5jGDGGiLaq3z9jpyjKbjkhAkQtXSZ4ybN_MY-cgLSueg/exec";
+
+function sheetUrl(env) {
+  return (env && env.SHEET_WEBHOOK) || SHEET_DEFAULT;
+}
 
 function emptySum() {
   return { clicks: 0, readings: 0, offers: 0, returns: 0, playTaps: 0, visits: 0, bySource: {}, updated: 0 };
@@ -79,16 +84,17 @@ export async function onRequestPost(context) {
   } catch {
     return json({ ok: false, code: "402.2.56.101" }, 500);
   }
-  const webhook = context.env && context.env.SHEET_WEBHOOK;
+  const webhook = sheetUrl(context.env);
   if (webhook) {
     try {
       await fetch(webhook, {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify(event)
+        body: JSON.stringify(event),
+        redirect: "follow"
       });
     } catch {
-      return json({ ok: true, code: "402.2.56.101", edge: true, sum: sum });
+      return json({ ok: true, code: "402.2.56.101", edge: true, sum: sum, sheet: true });
     }
   }
   return json({ ok: true, edge: true, store: "edge", sum: sum });
@@ -112,7 +118,21 @@ export async function onRequestGet(context) {
     }
   }
   const sum = await readSum(cache);
-  const payload = Object.assign({ ok: true, store: "edge", code: null }, sum);
+  let sheet = null;
+  try {
+    const sr = await fetch(sheetUrl(context.env), { redirect: "follow" });
+    sheet = await sr.json();
+  } catch {
+    sheet = null;
+  }
+  const payload = Object.assign(
+    { ok: true, store: "edge", code: null, sheetOk: !!(sheet && sheet.ok) },
+    sum,
+    {
+      clicks: Math.max(sum.clicks || 0, (sheet && sheet.clicks) || 0),
+      bySource: Object.assign({}, (sheet && sheet.bySource) || {}, sum.bySource || {})
+    }
+  );
   const cb = url.searchParams.get("callback");
   if (cb && /^[A-Za-z_][A-Za-z0-9_]*$/.test(cb)) {
     return new Response(cb + "(" + JSON.stringify(payload) + ");", {
