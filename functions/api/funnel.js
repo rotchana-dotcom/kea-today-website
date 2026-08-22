@@ -14,7 +14,7 @@ function json(data, status) {
 }
 
 const SHEET_DEFAULT =
-  "https://script.google.com/macros/s/AKfycbxCzFawhQ6GSmNUZWacQqpsicjTGppGIxdhidg3YmW8Afzns3ZwBj15hNxvcKREiptdkw/exec";
+  "https://script.google.com/macros/s/AKfycbxTriZZDVn4RbXeNclHGpv1jqeER_I0IwZl1BW9h7sDD4iIVoa0dsiWsPwAouSg7QDQQQ/exec";
 
 function sheetUrl(env) {
   return (env && env.SHEET_WEBHOOK) || SHEET_DEFAULT;

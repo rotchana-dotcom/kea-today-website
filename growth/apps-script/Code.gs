@@ -199,18 +199,20 @@ function fetchPlayConsole_() {
   if (token.error) return { error: token.error };
 
   var notes = [];
-  var app = playGet_(
+  var products = playGet_(
     token.access,
-    "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/" + PLAY_PACKAGE
+    "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/" +
+      PLAY_PACKAGE +
+      "/inappproducts"
   );
-  if (app.code >= 400) {
+  if (products.code >= 400) {
     return {
       error:
         "Android Publisher " +
-        app.code +
+        products.code +
         " " +
-        String(app.body).slice(0, 240) +
-        " — enable the API and give the service account View financial data / View app information."
+        String(products.body).slice(0, 280) +
+        " — Cloud Console: enable Google Play Android Developer API on project energy-today."
     };
   }
   notes.push("App linked: " + PLAY_PACKAGE);
