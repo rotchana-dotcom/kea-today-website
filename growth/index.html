@@ -63,11 +63,11 @@
 
   <div class="panel">
     <h2 style="color: #00ff9c; margin-bottom: 8px;">🔥 Best source</h2>
-    <p id="best" style="color: #b8bcc4;">—</p>
+    <p id="best" style="color: #b8bcc4;">Open a tracked link below, then come back here. Counts should rise.</p>
   </div>
   <div class="panel warn">
     <h2 style="color: #ffb020; margin-bottom: 8px;">⚠️ Leak + AI push</h2>
-    <p id="action" style="color: #fff; font-size: 1.15rem; margin-bottom: 12px;"></p>
+    <p id="action" style="color: #fff; font-size: 1.15rem; margin-bottom: 12px;">Paste installs if you have them. Click a path below to start measuring.</p>
     <ul id="lines" style="color: #b8bcc4; padding-left: 18px; line-height: 1.7;"></ul>
     <p class="fault" id="fault" style="margin-top: 12px;"></p>
     <button type="button" class="btn-primary" id="recompute" style="margin-top: 16px;">Recompute from pasted numbers</button>
@@ -75,7 +75,14 @@
 
   <div class="panel">
     <h2 style="color: #00ff9c; margin-bottom: 14px;">Tracked paths (use in posts)</h2>
-    <div class="track-list" id="tracks"></div>
+    <div class="track-list" id="tracks">
+      <div><strong>YouTube</strong> · <a href="go.html?src=youtube">go.html?src=youtube</a></div>
+      <div><strong>Facebook</strong> · <a href="go.html?src=facebook">go.html?src=facebook</a></div>
+      <div><strong>Instagram</strong> · <a href="go.html?src=instagram">go.html?src=instagram</a></div>
+      <div><strong>TikTok</strong> · <a href="go.html?src=tiktok">go.html?src=tiktok</a></div>
+      <div><strong>kea.today</strong> · <a href="go.html?src=website">go.html?src=website</a></div>
+      <div><strong>Free reading</strong> · <a href="reading.html">reading.html</a> · <a href="go.html?src=reading">go.html?src=reading</a></div>
+    </div>
   </div>
   <div class="panel muted">
     <p style="color: #b8bcc4;">Sellable placeholders: paste Play URL, socials, Sheet webhook in <code>config.js</code>. Energy Today is already wired.</p>
@@ -175,10 +182,14 @@
       tracks.appendChild(div);
     });
   }
-  renderTracks(KeaGrowth.funnel());
-  run();
-
   var status = document.getElementById("connect-status");
+  try {
+    renderTracks(KeaGrowth.funnel());
+    run();
+  } catch (err) {
+    if (status) status.textContent = "[402.1.4.0] Dashboard script error: " + err.message;
+  }
+
   fetch("/api/track")
     .then(function (r) { return r.json(); })
     .then(function (data) {

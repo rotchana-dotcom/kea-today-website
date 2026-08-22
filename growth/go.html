@@ -12,7 +12,7 @@
 <div class="growth-wrap">
   <p class="growth-kicker">Growth engine</p>
   <h1>Opening Energy Today…</h1>
-  <p id="status">Preparing tracked link.</p>
+  <p id="status">Saving click, then Google Play.</p>
   <p id="fault" class="fault"></p>
 </div>
 <script src="config.js"></script>
@@ -25,31 +25,34 @@
   var cfg = window.KEA_GROWTH || {};
   var status = document.getElementById("status");
   var faultEl = document.getElementById("fault");
+  var gone = false;
+
+  function go() {
+    if (gone) return;
+    gone = true;
+    window.location.replace(KeaGrowth.playUrl(src, campaign) || cfg.playStoreUrl);
+  }
 
   if (!cfg.playStoreUrl) {
     status.textContent = "Play Store URL is not set.";
-    faultEl.textContent = KeaGrowth.fault("402.1.1.0", "Fill playStoreUrl in config.js");
+    faultEl.textContent = "[402.1.1.0] Fill playStoreUrl in config.js";
     return;
   }
-  if (!(cfg.sources && cfg.sources[src])) {
-    faultEl.textContent = KeaGrowth.fault("402.1.2.0", "Unknown src; using website.");
-    src = "website";
-  }
+  if (!(cfg.sources && cfg.sources[src])) src = "website";
 
-  var result = KeaGrowth.recordClick(src);
-  KeaGrowth.record("play_tap", { src: src, campaign: campaign });
-  if (result && result.code) {
-    faultEl.textContent = KeaGrowth.fault(
-      result.code,
-      result.code === "402.2.1.0"
-        ? "Sheet not connected. Event saved here and sent to /api/track."
-        : "Sheet append may have failed. Visitor still goes to Play."
-    );
-  }
-  status.textContent = "Redirecting (" + src + (campaign ? " · " + campaign : "") + ")";
-  setTimeout(function () {
-    window.location.replace(KeaGrowth.playUrl(src, campaign));
-  }, 350);
+  var row = KeaGrowth.record("play_tap", { src: src, campaign: campaign });
+  status.textContent = "Logged " + src + ". Opening Play…";
+  var ctrl = typeof AbortSignal !== "undefined" && AbortSignal.timeout ? AbortSignal.timeout(2000) : undefined;
+  fetch("/api/track", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(row),
+    keepalive: true,
+    signal: ctrl
+  })
+    .then(function () { go(); })
+    .catch(function () { go(); });
+  setTimeout(go, 2200);
 })();
 </script>
 </body>

@@ -6,7 +6,7 @@ Do not guess. Read the note. Example: `402.2.56.101`.
 |------|---------|------------|
 | **402.1.1.0** | Play URL missing | Fill `playStoreUrl` in `config.js`. |
 | **402.1.2.0** | Unknown `src` | youtube, facebook, instagram, tiktok, website, reading, offer. |
-| **402.1.3.0** | `/api/track` got invalid JSON | Send a JSON object. |
+| **402.1.4.0** | Dashboard script error | Note the message. Hard-refresh. If it persists, JS files did not load. |
 | **402.2.1.0** | Track API / Sheet not ready | After deploy, clicks store on kea.today edge automatically. Sheet is optional. |
 | **402.2.56.101** | Sheet append failed | Check Web App deploy (Anyone), URL, network. Visitor still redirects to Play. |
 | **402.3.1.0** | Reading form incomplete | Name + birthday required. |
