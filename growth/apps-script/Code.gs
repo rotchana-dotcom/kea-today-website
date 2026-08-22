@@ -151,7 +151,9 @@ function fetchPlayPublic_() {
   var label = pick_(html, [
     /"downloadLabel"\s*:\s*"([^"]+)"/,
     /"downloads"\s*:\s*"([^"]+)"/,
-    /(\d[\d,.]*\s*[KMB]?\+?)\s*Downloads/i,
+    /([0-9][0-9,.]*\+)\s*Downloads/i,
+    /([0-9][0-9,.]*\+)\s*<[^>]*>\s*Downloads/i,
+    /Downloads<\/div>\s*<div[^>]*>\s*([^<]+)/i,
     /Downloads<\/span>\s*<span[^>]*>\s*([^<]+)/i
   ]);
   var rating = pick_(html, [

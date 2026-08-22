@@ -14,10 +14,30 @@ function json(data, status) {
 }
 
 const SHEET_DEFAULT =
-  "https://script.google.com/macros/s/AKfycbzxKgwi8ECKxYL3TOaOrA97lo5jGDGGiLaq3z9jpyjKbjkhAkQtXSZ4ybN_MY-cgLSueg/exec";
+  "https://script.google.com/macros/s/AKfycbxCzFawhQ6GSmNUZWacQqpsicjTGppGIxdhidg3YmW8Afzns3ZwBj15hNxvcKREiptdkw/exec";
 
 function sheetUrl(env) {
   return (env && env.SHEET_WEBHOOK) || SHEET_DEFAULT;
+}
+
+async function scrapePlayPublic() {
+  try {
+    const r = await fetch(
+      "https://play.google.com/store/apps/details?id=com.kea.energytoday&hl=en&gl=US",
+      { headers: { "user-agent": "Mozilla/5.0 (compatible; KeaToday/1.0)" } }
+    );
+    const html = await r.text();
+    const m =
+      html.match(/([0-9][0-9,.]*\+)\s*Downloads/i) ||
+      html.match(/([0-9][0-9,.]*\+)\s*<[^>]*>\s*Downloads/i);
+    return {
+      source: "play_store_public",
+      installsLabel: m ? m[1] : "",
+      note: "Public listing (not Console revenue)"
+    };
+  } catch {
+    return null;
+  }
 }
 
 function emptySum() {
@@ -131,7 +151,9 @@ export async function onRequestGet(context) {
     {
       clicks: Math.max(sum.clicks || 0, (sheet && sheet.clicks) || 0),
       bySource: Object.assign({}, (sheet && sheet.bySource) || {}, sum.bySource || {}),
-      play: (sheet && sheet.play) || null
+      play: (sheet && sheet.play && sheet.play.installsLabel)
+        ? sheet.play
+        : (await scrapePlayPublic()) || (sheet && sheet.play) || null
     }
   );
   const cb = url.searchParams.get("callback");
