@@ -29,22 +29,22 @@
   <h1>Money, leak, next push</h1>
   <p class="hero-description" style="max-width: 720px;">
     Clicks are <strong>connected on kea.today</strong> (all visitors, ~90 days on the edge).
-    Type Play Console installs / payers / revenue once — they save on this phone.
+    Clicks come from kea.today. Play money/installs come from Console when the Sheet key is set; you can still type numbers here.
     Google Sheet is optional extra (home). Posting stays on the studio app.
   </p>
   <p id="connect-status" class="fault" style="margin: 12px 0 0;"></p>
 
   <div class="stat-grid">
     <div class="stat-box money">
-      <h3>Revenue (paste)</h3>
+      <h3>Revenue</h3>
       <div class="num" id="rev" contenteditable="true">$</div>
     </div>
     <div class="stat-box">
-      <h3>Paying (paste)</h3>
+      <h3>Paying</h3>
       <div class="num" id="paid" contenteditable="true">—</div>
     </div>
     <div class="stat-box">
-      <h3>Installs (paste)</h3>
+      <h3>Installs</h3>
       <div class="num" id="installs" contenteditable="true">—</div>
     </div>
     <div class="stat-box">
@@ -209,17 +209,31 @@
   }
   window.keaFunnelStats = function (data) {
     edge = data;
-    if (data.play && (data.play.installsLabel || data.play.installsGuess)) {
+    if (data.play) {
       var inst = document.getElementById("installs");
-      if (inst && (inst.textContent === "—" || inst.textContent.trim() === "")) {
+      var paidEl = document.getElementById("paid");
+      var revEl = document.getElementById("rev");
+      function emptyBox(el) {
+        var t = (el && el.textContent || "").trim();
+        return !t || t === "—" || t === "$";
+      }
+      if (inst && emptyBox(inst) && (data.play.installsLabel || data.play.installsGuess)) {
         inst.textContent = data.play.installsLabel || String(data.play.installsGuess);
       }
+      if (paidEl && emptyBox(paidEl) && data.play.payers) paidEl.textContent = String(data.play.payers);
+      if (revEl && emptyBox(revEl) && data.play.revenue) revEl.textContent = "$" + data.play.revenue;
     }
-    if (status) status.textContent = data.play && data.play.installsLabel
-      ? "Play listing: " + data.play.installsLabel + " installs (" + (data.play.source || "public") + "). Revenue still needs Console."
-      : ((data.clicks || 0) > 0
-        ? "Site-wide clicks: " + data.clicks
-        : "Ready. Tap Test click — tracked clicks should become 1.");
+    if (status) {
+      if (data.play && data.play.source === "play_console") {
+        status.textContent = "Play Console connected. " + (data.play.note || "");
+      } else if (data.play && data.play.installsLabel) {
+        status.textContent = "Play listing: " + data.play.installsLabel + " installs. Revenue needs the Console JSON key in Apps Script.";
+      } else if ((data.clicks || 0) > 0) {
+        status.textContent = "Site-wide clicks: " + data.clicks;
+      } else {
+        status.textContent = "Ready. Tap Test click — tracked clicks should become 1.";
+      }
+    }
     run();
     renderTracks(mergedFunnel());
   };

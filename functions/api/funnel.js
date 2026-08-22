@@ -20,6 +20,14 @@ function sheetUrl(env) {
   return (env && env.SHEET_WEBHOOK) || SHEET_DEFAULT;
 }
 
+function preferPlay(sheetPlay, publicPlay) {
+  if (sheetPlay && (sheetPlay.source === "play_console" || sheetPlay.revenue || sheetPlay.payers)) {
+    return sheetPlay;
+  }
+  if (sheetPlay && sheetPlay.installsLabel) return sheetPlay;
+  return publicPlay || sheetPlay || null;
+}
+
 async function scrapePlayPublic() {
   try {
     const r = await fetch(
@@ -151,9 +159,7 @@ export async function onRequestGet(context) {
     {
       clicks: Math.max(sum.clicks || 0, (sheet && sheet.clicks) || 0),
       bySource: Object.assign({}, (sheet && sheet.bySource) || {}, sum.bySource || {}),
-      play: (sheet && sheet.play && sheet.play.installsLabel)
-        ? sheet.play
-        : (await scrapePlayPublic()) || (sheet && sheet.play) || null
+      play: preferPlay(sheet && sheet.play, await scrapePlayPublic())
     }
   );
   const cb = url.searchParams.get("callback");
