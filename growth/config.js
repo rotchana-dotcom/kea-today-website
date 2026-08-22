@@ -7,7 +7,7 @@ window.KEA_GROWTH = {
   productName: "Energy Today",
   productType: "android_app",
   retentionDays: 90,
-  trackApi: "/api/track",
+  trackApi: "https://www.kea.today/api/funnel",
 
   playStoreUrl: "https://play.google.com/store/apps/details?id=com.kea.energytoday",
   websiteUrl: "https://www.kea.today/",

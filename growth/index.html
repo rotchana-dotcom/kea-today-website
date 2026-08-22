@@ -190,18 +190,21 @@
     if (status) status.textContent = "[402.1.4.0] Dashboard script error: " + err.message;
   }
 
-  fetch("/api/track")
-    .then(function (r) { return r.json(); })
+  fetch("https://www.kea.today/api/funnel")
+    .then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    })
     .then(function (data) {
       edge = data;
       status.textContent = data.ok
-        ? KeaGrowth.fault("402.5.1.0", "Click store connected on kea.today (edge). Sheet still optional.")
-        : KeaGrowth.fault(data.code || "402.2.1.0", data.note || "Track API not ready — hard-refresh after Cloudflare deploy.");
+        ? "Funnel store connected. Clicks from go.html count here."
+        : KeaGrowth.fault(data.code || "402.2.1.0", data.note || "Funnel API returned an error.");
       run();
       renderTracks(mergedFunnel());
     })
     .catch(function () {
-      status.textContent = KeaGrowth.fault("402.2.1.0", "Could not reach /api/track yet. Wait for Pages deploy, then Ctrl+F5.");
+      status.textContent = KeaGrowth.fault("402.2.1.0", "Phone-only counts until funnel API loads. Use www.kea.today/growth/ (not github.io).");
     });
 })();
 </script>

@@ -81,9 +81,11 @@
       save(rows);
 
       var payload = JSON.stringify(row);
-      var api = cfg.trackApi || "/api/track";
+      var api = cfg.trackApi || "https://www.kea.today/api/funnel";
       try {
-        fetch(api, { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true }).catch(function () {});
+        fetch(api, { method: "POST", headers: { "Content-Type": "application/json" }, body: payload, keepalive: true, mode: "cors" }).catch(function () {});
+        var img = new Image();
+        img.src = api + "?type=" + encodeURIComponent(type) + "&src=" + encodeURIComponent(src) + "&c=" + encodeURIComponent(campaign) + "&n=" + Date.now();
       } catch (e) {}
 
       if (cfg.sheetWebhook) {
