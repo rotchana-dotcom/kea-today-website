@@ -33,5 +33,8 @@ window.KEA_GROWTH = {
     { id: "A", headline: "Discover your energy today." },
     { id: "B", headline: "Find out what today has in store for you." },
     { id: "C", headline: "Your birth date reveals more than you think." }
-  ]
+  ],
+
+  /** Invite line for humans + N97 captions. {url} is the tracked go.html link. */
+  inviteLine: "Try Energy Today — fully automated daily energy on your phone (free on Google Play): {url}"
 };

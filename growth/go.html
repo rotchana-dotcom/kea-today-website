@@ -10,9 +10,12 @@
 </head>
 <body>
 <div class="growth-wrap">
-  <p class="growth-kicker">Growth engine</p>
-  <h1>Opening Energy Today…</h1>
-  <p id="status">Saving click, then Google Play.</p>
+  <p class="growth-kicker">Download Energy Today</p>
+  <h1>Opening Google Play…</h1>
+  <p id="status">Saving this tap, then the app. Energy Today runs fully automated daily energy on your phone.</p>
+  <p style="margin: 18px 0;">
+    <a class="btn-primary" id="play-fallback" href="https://play.google.com/store/apps/details?id=com.kea.energytoday">Download Energy Today</a>
+  </p>
   <p id="fault" class="fault"></p>
 </div>
 <script src="config.js"></script>
@@ -26,19 +29,9 @@
   var status = document.getElementById("status");
   var faultEl = document.getElementById("fault");
   var gone = false;
-
-  function go() {
-    if (gone) return;
-    gone = true;
-    window.location.replace(KeaGrowth.playUrl(src, campaign) || cfg.playStoreUrl);
-  }
-
-  if (!cfg.playStoreUrl) {
-    status.textContent = "Play Store URL is not set.";
-    faultEl.textContent = "[402.1.1.0] Fill playStoreUrl in config.js";
-    return;
-  }
+  var fallback = document.getElementById("play-fallback");
   if (!(cfg.sources && cfg.sources[src])) src = "website";
+  if (fallback) fallback.href = KeaGrowth.playUrl(src, campaign) || cfg.playStoreUrl;
 
   var api = (cfg.trackApi || "https://www.kea.today/api/funnel");
   var row = KeaGrowth.record("play_tap", { src: src, campaign: campaign });

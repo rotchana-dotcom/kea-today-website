@@ -15,5 +15,6 @@ Do not guess. Read the note. Example: `402.2.56.101`.
 | **402.6.1.0** | Clicks exist, installs not entered | Paste Play Console. Then decide CTA vs store listing. |
 | **402.6.2.0** | Installs exist, no payers entered | Return-visit 3-day trial is already on the reading page. Measure purchases in Play. |
 | **402.7.1.0** | App convert webhook unused | Energy Today should POST `/api/convert` on install/purchase when you add that in the Android app. |
+| **402.8.1.0** | Replies not read yet | Paste comments into Growth → Read replies. The brain cannot pick a winner caption from silence. |
 
 N97 cron (optional, later): `kea-growth-engine/server/cron-ai.mjs` — AI only every few hours, not every minute.
