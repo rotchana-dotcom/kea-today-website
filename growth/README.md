@@ -2,11 +2,12 @@
 
 Sales / conversion funnel for Energy Today. Extract this folder (plus `functions/api/`) to sell as a web app.
 
-## Live (no N97)
+## Live
 
-- Dashboard: https://www.kea.today/growth/
+- Dashboard: https://www.kea.today/growth/ (Cloudflare — phones hit this, not N97)
 - Reading: https://www.kea.today/growth/reading.html
 - Track: `https://www.kea.today/growth/go.html?src=youtube&c=POST_ID`
+- N97 24/7: AI Overseer turns the growth **manager** on at KEAServer start / restart (tiny poll + Echos caption check). Does not copy this website onto the N97 disk.
 
 ## Automation that is on
 

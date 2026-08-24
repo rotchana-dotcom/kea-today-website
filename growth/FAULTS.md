@@ -11,10 +11,10 @@ Do not guess. Read the note. Example: `402.2.56.101`.
 | **402.2.56.101** | Sheet append failed | Check Web App deploy (Anyone), URL, network. Visitor still redirects to Play. |
 | **402.3.1.0** | Reading form incomplete | Name + birthday required. |
 | **402.4.1.0** | No clicks and no Play numbers | Use tracked links; paste Console installs. Do not invent a leak. |
-| **402.5.1.0** | N97 not required for public funnel | kea.today / Cloudflare. Sync N97 later only to change Echos captions. |
+| **402.5.1.0** | Public funnel is not hosted on N97 | Pages stay on kea.today (Cloudflare). N97 only runs the AI Overseer growth poll after KEAServer restart. |
 | **402.6.1.0** | Clicks exist, installs not entered | Paste Play Console. Then decide CTA vs store listing. |
 | **402.6.2.0** | Installs exist, no payers entered | Return-visit 3-day trial is already on the reading page. Measure purchases in Play. |
 | **402.7.1.0** | App convert webhook unused | Energy Today should POST `/api/convert` on install/purchase when you add that in the Android app. |
 | **402.8.1.0** | Replies not read yet | Paste comments into Growth → Read replies. The brain cannot pick a winner caption from silence. |
 
-N97 cron (optional, later): `kea-growth-engine/server/cron-ai.mjs` — AI only every few hours, not every minute.
+N97: AI Overseer starts `energyTodayGrowth` on KEAServer boot (and nightly restart). Poll every 3 hours. Off: `ENERGY_TODAY_GROWTH=false`.
