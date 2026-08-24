@@ -26,11 +26,15 @@
         }
       });
 
-      if (clicks === 0 && !installs) {
+      if (clicks < 50 && !(paid > 0)) {
         code = "402.4.1.0";
-        leak = "no_signal";
-        action = "Put tracked links in every Echos caption. Then wait for clicks.";
-        lines.push("No clicks and no Play numbers. Do not guess the leak.");
+        leak = "no_awareness";
+        action = "PUSH today: put the tracked www.kea.today/growth/go.html link in every Echos caption (YouTube, Facebook, Instagram, TikTok). Almost nobody knows Energy Today. 7 installs will not become 7000 from Play Console.";
+        if (clicks === 0) {
+          lines.push("No real traffic yet. The funnel is for pushing, not for reports.");
+        } else {
+          lines.push(clicks + " tracked click(s). Still too few. Keep pushing the same tracked links.");
+        }
       } else if (clicks > 0 && !(installs > 0)) {
         code = "402.6.1.0";
         leak = "click_to_install";

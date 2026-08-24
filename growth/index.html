@@ -25,12 +25,12 @@
 </nav>
 
 <div class="growth-wrap">
-  <p class="growth-kicker">AI Growth Engine · salesperson · 90-day window</p>
-  <h1>Money, leak, next push</h1>
+  <p class="growth-kicker">Push funnel · Energy Today · nobody knows it yet</p>
+  <h1>Push this until people know it</h1>
   <p class="hero-description" style="max-width: 720px;">
-    Clicks are <strong>connected on kea.today</strong> (all visitors, ~90 days on the edge).
-    Clicks come from kea.today. Play money/installs come from Console when the Sheet key is set; you can still type numbers here.
-    Google Sheet is optional extra (home). Posting stays on the studio app.
+    This is a <strong>sales funnel</strong>: every post must send people through a tracked link, then Play.
+    About <strong>7 installs</strong> today. The target is thousands. Play reports do not market the app.
+    Copy a link below into the caption. Studio posting still runs on the N97 app.
   </p>
   <p id="connect-status" class="fault" style="margin: 12px 0 0;"></p>
 
@@ -45,7 +45,7 @@
     </div>
     <div class="stat-box">
       <h3>Installs</h3>
-      <div class="num" id="installs" contenteditable="true">—</div>
+      <div class="num" id="installs" contenteditable="true">7</div>
     </div>
     <div class="stat-box">
       <h3>Tracked clicks</h3>
@@ -67,7 +67,7 @@
   </div>
   <div class="panel warn">
     <h2 style="color: #ffb020; margin-bottom: 8px;">⚠️ Leak + AI push</h2>
-    <p id="action" style="color: #fff; font-size: 1.15rem; margin-bottom: 12px;">Paste installs if you have them. Click a path below to start measuring.</p>
+    <p id="action" style="color: #fff; font-size: 1.15rem; margin-bottom: 12px;">Copy a tracked link. Put it in today's captions.</p>
     <ul id="lines" style="color: #b8bcc4; padding-left: 18px; line-height: 1.7;"></ul>
     <p class="fault" id="fault" style="margin-top: 12px;"></p>
     <button type="button" class="btn-primary" id="test-click" style="margin-top: 16px; margin-right: 10px;">Test click (this phone)</button>
@@ -75,15 +75,9 @@
   </div>
 
   <div class="panel">
-    <h2 style="color: #00ff9c; margin-bottom: 14px;">Tracked paths (use in posts)</h2>
-    <div class="track-list" id="tracks">
-      <div><strong>YouTube</strong> · <a href="go.html?src=youtube">go.html?src=youtube</a></div>
-      <div><strong>Facebook</strong> · <a href="go.html?src=facebook">go.html?src=facebook</a></div>
-      <div><strong>Instagram</strong> · <a href="go.html?src=instagram">go.html?src=instagram</a></div>
-      <div><strong>TikTok</strong> · <a href="go.html?src=tiktok">go.html?src=tiktok</a></div>
-      <div><strong>kea.today</strong> · <a href="go.html?src=website">go.html?src=website</a></div>
-      <div><strong>Free reading</strong> · <a href="reading.html">reading.html</a> · <a href="go.html?src=reading">go.html?src=reading</a></div>
-    </div>
+    <h2 style="color: #00ff9c; margin-bottom: 8px;">Push links (copy into captions)</h2>
+    <p style="color: #b8bcc4; margin-bottom: 14px;">Full URL only. Do not use a raw Play Store link in posts — that click is invisible to this funnel.</p>
+    <div class="track-list" id="tracks"></div>
   </div>
   <div class="panel muted">
     <p style="color: #b8bcc4;">Sellable placeholders: paste Play URL, socials, Sheet webhook in <code>config.js</code>. Energy Today is already wired.</p>
@@ -187,13 +181,32 @@
   function renderTracks(funnel) {
     var tracks = document.getElementById("tracks");
     tracks.innerHTML = "";
+    var origin = "https://www.kea.today/growth/";
     ["youtube", "facebook", "instagram", "tiktok", "website", "reading"].forEach(function (k) {
       var s = (cfg.sources && cfg.sources[k]) || { label: k };
       var n = (funnel.bySource && funnel.bySource[k]) || 0;
+      var url = origin + "go.html?src=" + k;
       var div = document.createElement("div");
-      div.innerHTML = "<strong>" + s.label + "</strong> · " + n +
-        ' · <a href="go.html?src=' + k + '">go.html?src=' + k + "</a>" +
-        (s.profile ? ' · <a href="' + s.profile + '" target="_blank" rel="noopener">profile</a>' : " · paste profile when selling");
+      div.className = "track-row";
+      var a = document.createElement("a");
+      a.href = url;
+      a.textContent = url;
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.textContent = "Copy";
+      btn.onclick = function () {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(url).then(function () {
+            btn.textContent = "Copied";
+            setTimeout(function () { btn.textContent = "Copy"; }, 1500);
+          });
+        }
+      };
+      var label = document.createElement("strong");
+      label.textContent = s.label + " · " + n + " ";
+      div.appendChild(label);
+      div.appendChild(btn);
+      div.appendChild(a);
       tracks.appendChild(div);
     });
   }

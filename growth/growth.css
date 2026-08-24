@@ -21,8 +21,18 @@
 .panel.warn { border-left-color: #ffb020; }
 .panel.muted { border-left-color: #555; }
 .fault { font-family: ui-monospace, Consolas, monospace; color: #00ff9c; font-size: 0.85rem; }
-.track-list { display: grid; gap: 10px; }
-.track-list a { color: #00ff9c; }
+.track-list { display: grid; gap: 12px; }
+.track-list a { color: #00ff9c; word-break: break-all; }
+.track-row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+.track-row button {
+  background: #00ff9c;
+  color: #0c0e12;
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
 .growth-form label { display: block; color: #b8bcc4; margin-bottom: 6px; }
 .growth-form input {
   width: 100%;
