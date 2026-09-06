@@ -532,14 +532,14 @@ img {
 
 /* ===== ABOUT SECTION ===== */
 .about {
-  padding: 80px 20px;
+  padding: 48px 20px;
   background: linear-gradient(135deg, #1a1d24 0%, #0c0e12 100%);
 }
 
 .about h2 {
   text-align: center;
-  font-size: 2.5rem;
-  margin-bottom: 50px;
+  font-size: 1.7rem;
+  margin-bottom: 22px;
   color: #00ff9c;
 }
 
