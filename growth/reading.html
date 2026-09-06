@@ -3,99 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What is your energy today? — Energy Today</title>
-<meta name="description" content="Free Energy Today reading, then the app on Google Play.">
-<link rel="stylesheet" href="../styles.css">
-<link rel="stylesheet" href="growth.css">
+<title>Your Energy Today — Kea Today</title>
+<meta name="description" content="What's your energy saying today? Unlock your personal reading.">
+<meta http-equiv="refresh" content="0; url=https://app.kea.today/funnel/reading.html">
+<link rel="canonical" href="https://app.kea.today/funnel/reading.html">
 </head>
 <body>
-
-<nav class="main-nav">
-  <div class="nav-container">
-    <a href="../index.html" class="logo-link">
-      <img src="../kea-logo.jpg" alt="Kea Logo" class="nav-logo">
-      <span class="logo-text">Kea Today</span>
-    </a>
-    <ul class="nav-links">
-      <li><a href="../echos-wisdom.html">Echos & Wisdom</a></li>
-      <li><a href="go.html?src=reading" id="nav-play">Google Play</a></li>
-    </ul>
-  </div>
-</nav>
-
-<div class="growth-wrap">
-  <p class="growth-kicker">Energy Today · experiment <span id="exp-id">A</span></p>
-  <h1 id="headline">What is your energy today?</h1>
-  <p class="hero-description" style="max-width: 640px;">
-    Enter your name and birthday for a free snapshot. Then download Energy Today and let the full daily pattern run fully automated on your phone — private, on your device.
-  </p>
-
-  <div class="panel warn" id="return-offer" style="display: none; margin-top: 24px;">
-    <h2 style="color: #ffb020; margin-bottom: 10px;">You're back</h2>
-    <p style="color: #b8bcc4; margin-bottom: 16px;">
-      You already took a free reading. Energy Today can track the next 3 days in more detail in the app.
-    </p>
-    <a class="btn-primary" href="go.html?src=offer">Download Energy Today — try it automated</a>
-  </div>
-
-  <form class="growth-form" id="reading-form" style="margin-top: 28px;">
-    <label for="name">Name</label>
-    <input id="name" name="name" type="text" autocomplete="name" required>
-    <label for="bday">Birthday</label>
-    <input id="bday" name="bday" type="date" required>
-    <button type="submit" class="btn-primary">Get my free reading</button>
-    <p id="form-fault" class="fault" style="margin-top: 12px;"></p>
-  </form>
-
-  <div class="reading-result panel" id="result">
-    <h2 style="color: #00ff9c; margin-bottom: 12px;">Your snapshot</h2>
-    <p id="result-text" style="color: #b8bcc4; line-height: 1.7;"></p>
-    <p style="margin: 20px 0; color: #b8bcc4;">The app keeps the rest of the pattern and runs it fully automated each day.</p>
-    <a class="btn-primary" href="go.html?src=reading">Download Energy Today — try it automated</a>
-  </div>
-</div>
-
-<script src="config.js?v=2"></script>
-<script src="growth.js?v=2"></script>
+<p>This reading is part of Kea Today. Continue to <a href="https://app.kea.today/funnel/reading.html">your energy reading</a>.</p>
 <script>
-(function () {
-  var exp = KeaGrowth.experiment();
-  KeaGrowth._exp = exp;
-  document.getElementById("exp-id").textContent = exp.id;
-  document.getElementById("headline").textContent = exp.headline;
-  KeaGrowth.record("visit", { exp: exp.id, src: new URLSearchParams(location.search).get("src") || "website" });
-
-  if (KeaGrowth.seenReadingBefore()) {
-    document.getElementById("return-offer").style.display = "block";
-    KeaGrowth.record("return", { exp: exp.id, src: "offer" });
-    KeaGrowth.record("offer_shown", { exp: exp.id, src: "offer" });
-  }
-
-  document.getElementById("reading-form").addEventListener("submit", function (e) {
-    e.preventDefault();
-    var name = document.getElementById("name").value.trim();
-    var bday = document.getElementById("bday").value;
-    var fault = document.getElementById("form-fault");
-    if (!name || !bday) {
-      fault.textContent = KeaGrowth.fault("402.3.1.0", "Name and birthday are required.");
-      return;
-    }
-    fault.textContent = "";
-    KeaGrowth.record("reading", { exp: exp.id, src: "reading" });
-    KeaGrowth.markReading();
-    var d = new Date(bday + "T12:00:00");
-    var tones = [
-      "Today favours a slower start and one clear decision.",
-      "Today favours focused work in short blocks, then rest.",
-      "Today favours a conversation you have been putting off.",
-      "Today favours protecting your energy before adding more tasks."
-    ];
-    document.getElementById("result-text").textContent =
-      name + ", born " + d.toLocaleDateString() + ". " + tones[d.getDate() % tones.length] +
-      " Open Energy Today for the full pattern.";
-    document.getElementById("result").classList.add("show");
-  });
-})();
+  var q = location.search || "";
+  location.replace("https://app.kea.today/funnel/reading.html" + q);
 </script>
 </body>
 </html>

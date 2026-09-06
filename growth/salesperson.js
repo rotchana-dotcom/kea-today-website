@@ -37,7 +37,7 @@
     how_it_works: "Put your birthday in once. After that it is fully automated — a daily energy read without you managing it.",
     timing: "Use it before a meeting, launch, or hard day. The app times the day for you automatically.",
     privacy: "Nothing leaves your phone. No social feed. Try it free, then keep what works.",
-    skeptical: "It is a private timing tool, not a feed. Try the free snapshot at kea.today/growth/reading.html then the app.",
+    skeptical: "It is a private timing tool, not a feed. Unlock a reading at app.kea.today/funnel, then the app.",
     resonance: "If that landed, download Energy Today and let it run. That clip was the invite."
   };
 

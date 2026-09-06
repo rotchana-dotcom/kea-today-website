@@ -3,105 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Shop - Kea Today</title>
-<meta name="description" content="Unique products inspired by Kea's wisdom and creativity. Coming soon to Kea Today shop.">
+<title>Shop — Kea Today</title>
+<meta name="description" content="Unlock today's energy reading or the full personal letter. Pay on Stripe. We email it.">
 <link rel="stylesheet" href="styles.css">
-<style>
-.coming-soon-container {
-  min-height: 70vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.coming-soon-content {
-  max-width: 600px;
-}
-
-.shop-icon {
-  font-size: 8rem;
-  margin-bottom: 30px;
-  animation: float 3s ease-in-out infinite;
-}
-
-@keyframes float {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-20px); }
-}
-
-.notify-form {
-  margin-top: 40px;
-  display: flex;
-  gap: 10px;
-  justify-content: center;
-  flex-wrap: wrap;
-}
-
-.notify-input {
-  padding: 15px 20px;
-  border-radius: 8px;
-  border: 2px solid #00ff9c;
-  background: #1e2026;
-  color: #ffffff;
-  font-size: 1rem;
-  min-width: 300px;
-}
-
-.notify-input::placeholder {
-  color: #b8bcc4;
-}
-
-.notify-button {
-  padding: 15px 30px;
-  background: #00ff9c;
-  color: #0c0e12;
-  border: none;
-  border-radius: 8px;
-  font-weight: bold;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.notify-button:hover {
-  background: #00cc7a;
-  transform: scale(1.05);
-}
-
-.product-preview {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 30px;
-  margin-top: 60px;
-}
-
-.product-card {
-  background: #1e2026;
-  padding: 30px;
-  border-radius: 16px;
-  text-align: center;
-  border: 1px solid rgba(0, 255, 156, 0.1);
-}
-
-.product-card h3 {
-  color: #00ff9c;
-  margin: 20px 0 10px;
-}
-
-.product-card p {
-  color: #b8bcc4;
-  line-height: 1.6;
-}
-</style>
 </head>
 <body>
 
-<!-- Language Switcher -->
 <a class="lang-switch" href="thai.html">ไทย</a>
 
-<!-- Navigation -->
 <nav class="main-nav">
   <div class="nav-container">
     <a href="index.html" class="logo-link">
@@ -110,114 +19,87 @@
     </a>
     <ul class="nav-links">
       <li><a href="index.html">Home</a></li>
-      <li><a href="kea-humour.html">Kea.humour</a></li>
-      <li><a href="echos-wisdom.html">Echos & Wisdom</a></li>
-      <li><a href="kiwi-thai.html">Kiwi in Thai</a></li>
-      <li><a href="mindfulness-quotes.html">Mindfulness.quotes</a></li>
+      <li><a href="story.html">My Story</a></li>
+      <li><a href="https://app.kea.today/funnel/reading.html">Reading</a></li>
       <li><a href="energy-today-app.html">Energy Today</a></li>
-      <li><a href="shop.html" class="active">Shop</a></li>
     </ul>
   </div>
 </nav>
 
-<!-- Coming Soon Section -->
-<section class="coming-soon-container">
-  <div class="coming-soon-content">
-    <div class="shop-icon">🛍️</div>
-    <h1 style="font-size: 3rem; color: #00ff9c; margin-bottom: 20px;">Shop Coming Soon</h1>
-    <h2 style="font-size: 1.5rem; color: #ffffff; font-weight: 400; margin-bottom: 30px;">
-      Unique Products Inspired by Kea's Wisdom
-    </h2>
-    <p style="color: #b8bcc4; font-size: 1.1rem; line-height: 1.8;">
-      We're curating a special collection of products that embody the spirit of Kea Today—
-      creativity, mindfulness, and joyful living. From journals and planners to unique 
-      merchandise, each item will be designed to inspire and delight.
-    </p>
-    
-    <form class="notify-form" onsubmit="event.preventDefault(); alert('Thank you! We\'ll notify you when the shop launches.');">
-      <input type="email" class="notify-input" placeholder="Enter your email" required>
-      <button type="submit" class="notify-button">Notify Me</button>
-    </form>
-    
-    <p style="color: #b8bcc4; margin-top: 20px; font-style: italic;">
-      Be the first to know when we launch!
+<section class="hero story-hero">
+  <div class="hero-content">
+    <h1>Shop</h1>
+    <p class="hero-pillars">Energy · Creativity · Wisdom · Storytelling</p>
+    <h2>The same product as the path. Pay on Stripe. We email the letter.</h2>
+    <p class="hero-description">
+      Not merch. Not a second business. Discover yourself, go deeper, then keep Energy Today on your phone.
     </p>
   </div>
 </section>
 
-<!-- Product Preview Section -->
-<section class="features" style="padding-top: 0;">
+<section class="journey">
   <div class="container">
-    <h2 class="section-title">What's Coming</h2>
-    
-    <div class="product-preview">
-      
-      <div class="product-card">
-        <div style="font-size: 3rem; margin-bottom: 15px;">📓</div>
-        <h3>Energy Journals</h3>
-        <p>Beautiful journals designed to track your energy patterns, reflections, and daily insights.</p>
-      </div>
+    <h2 class="section-title">What you can unlock</h2>
+    <p class="journey-lead">Same $6.99 USD and $29 USD. Same Stripe. The letter is not shown for free.</p>
 
-      <div class="product-card">
-        <div style="font-size: 3rem; margin-bottom: 15px;">👕</div>
-        <h3>Kea Apparel</h3>
-        <p>Comfortable clothing featuring Kea-inspired designs and motivational quotes.</p>
-      </div>
+    <ol class="journey-steps journey-steps-three">
+      <li class="journey-step">
+        <p class="journey-label">Discover yourself</p>
+        <h3>Today’s reading</h3>
+        <p class="shop-price">$6.99 USD</p>
+        <p>Today’s energy in depth, birth rhythm, one focus, best timing, and three actions. Emailed after Stripe.</p>
+        <a href="https://app.kea.today/funnel/paid.html?tier=extended&amp;src=shop" class="btn-primary">Pay $6.99 USD</a>
+      </li>
+      <li class="journey-step">
+        <p class="journey-label">Go deeper</p>
+        <h3>Full personal letter</h3>
+        <p class="shop-price">$29 USD</p>
+        <p>Everything in today’s reading, plus your life chapter, the week ahead, and richer actions. Emailed after Stripe.</p>
+        <a href="https://app.kea.today/funnel/paid.html?tier=full&amp;src=shop" class="btn-primary">Pay $29 USD</a>
+      </li>
+      <li class="journey-step">
+        <p class="journey-label">Every day</p>
+        <h3>Energy Today app</h3>
+        <p class="shop-price">Free on Google Play</p>
+        <p>The daily app on your phone. Private, on your device.</p>
+        <a href="energy-today-app.html" class="btn-secondary">The daily app</a>
+      </li>
+    </ol>
+  </div>
+</section>
 
-      <div class="product-card">
-        <div style="font-size: 3rem; margin-bottom: 15px;">🎨</div>
-        <h3>Art Prints</h3>
-        <p>Stunning artwork celebrating mindfulness, creativity, and the spirit of the Kea bird.</p>
+<section class="about">
+  <div class="container">
+    <h2>My Story is not for sale here</h2>
+    <div class="about-content">
+      <div class="about-text">
+        <p>
+          The book sits under My Story. It is why a real person is behind the reading — not a shop tile.
+        </p>
+        <a href="story.html" class="btn-primary">This is where my story begins</a>
+        <a href="https://app.kea.today/funnel/reading.html" class="btn-secondary" style="margin-left: 12px;">Start with a teaser</a>
       </div>
-
-      <div class="product-card">
-        <div style="font-size: 3rem; margin-bottom: 15px;">📅</div>
-        <h3>Planners</h3>
-        <p>Thoughtfully designed planners that integrate energy awareness into your daily planning.</p>
+      <div class="about-image">
+        <img src="kea-logo.jpg" alt="Kea Bird" class="about-kea">
       </div>
-
-      <div class="product-card">
-        <div style="font-size: 3rem; margin-bottom: 15px;">🎁</div>
-        <h3>Gift Sets</h3>
-        <p>Curated gift collections perfect for friends and loved ones seeking inspiration.</p>
-      </div>
-
-      <div class="product-card">
-        <div style="font-size: 3rem; margin-bottom: 15px;">🧘</div>
-        <h3>Mindfulness Tools</h3>
-        <p>Meditation cushions, affirmation cards, and other tools for mindful living.</p>
-      </div>
-
     </div>
   </div>
 </section>
 
-<!-- Footer -->
 <footer class="footer">
   <div class="container">
     <div class="footer-content">
       <div class="footer-section">
         <h4>Kea Today</h4>
-        <p>Energy, creativity, and inspiration for your growth.</p>
+        <p>Energy · Creativity · Wisdom · Storytelling.</p>
       </div>
       <div class="footer-section">
-        <h4>Quick Links</h4>
+        <h4>The path</h4>
         <ul>
-          <li><a href="kea-humour.html">Kea.humour</a></li>
-          <li><a href="echos-wisdom.html">Echos & Wisdom</a></li>
-          <li><a href="kiwi-thai.html">Kiwi in Thai</a></li>
-          <li><a href="mindfulness-quotes.html">Mindfulness.quotes</a></li>
-          <li><a href="energy-today-app.html">Energy Today App</a></li>
-          <li><a href="https://play.google.com/store/apps/details?id=com.kea.energytoday" target="_blank" rel="noopener">Energy Today on Google Play</a></li>
-          <li><a href="shop.html">Shop</a></li>
-        </ul>
-      </div>
-      <div class="footer-section">
-        <h4>Follow Us</h4>
-        <ul>
-          <li><a href="https://www.youtube.com/@keatoday" target="_blank">YouTube</a></li>
-          <li><a href="https://www.instagram.com/keatoday" target="_blank">Instagram</a></li>
-          <li><a href="https://www.tiktok.com/@keatoday" target="_blank">TikTok</a></li>
+          <li><a href="https://app.kea.today/funnel/reading.html">Discover yourself</a></li>
+          <li><a href="https://app.kea.today/funnel/paid.html?src=shop">Go deeper</a></li>
+          <li><a href="energy-today-app.html">Energy Today app</a></li>
+          <li><a href="story.html">My Story</a></li>
         </ul>
       </div>
       <div class="footer-section">
@@ -226,7 +108,6 @@
           <li><a href="privacy-policy.html">Privacy Policy</a></li>
           <li><a href="terms.html">Terms of Service</a></li>
           <li><a href="mailto:kea@kea.today">kea@kea.today</a></li>
-          <li><a href="mailto:hello@kea.today">hello@kea.today</a></li>
         </ul>
       </div>
     </div>
