@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Today’s step — Echoes &amp; Wisdom</title>
+<meta name="description" content="One step a day. An everyday path from thought to emptiness, light, purity and immortality. Come back tomorrow.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo-link">
+      <img src="kea-logo.jpg" alt="Kea Logo" class="nav-logo">
+      <span class="logo-text">Kea Today</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="story.html">My Story</a></li>
+      <li><a href="https://app.kea.today/funnel/reading.html">Reading</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="energy-today-app.html">App</a></li>
+    </ul>
+    <a class="nav-lang" href="thai.html">ไทย</a>
+  </div>
+</nav>
+
+<section class="hero story-hero">
+  <div class="hero-content">
+    <p class="hero-pillars">Echoes &amp; Wisdom</p>
+    <h1>The 600 Steps</h1>
+    <h2>An everyday path from thought to emptiness, light, purity and immortality</h2>
+    <p class="hero-description">One at a time. Come back tomorrow for the next.</p>
+  </div>
+</section>
+
+<section class="features" style="padding-top: 8px;">
+  <div class="container">
+    <article class="step-today" id="step-today">
+      <p class="step-kicker">Today</p>
+      <p class="step-loading">One moment.</p>
+    </article>
+    <p class="step-note">This is a teaching path on Echoes. The next number is tomorrow. The 600 are not here all at once.</p>
+    <div class="hero-cta" style="margin-top: 28px;">
+      <a href="echos-wisdom.html" class="btn-secondary">Echoes &amp; Wisdom</a>
+      <a href="https://app.kea.today/funnel/reading.html?src=echoes-600" class="btn-primary">Today’s reading</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Kea Today</h4>
+        <p>Energy · Creativity · Wisdom · Storytelling.</p>
+      </div>
+      <div class="footer-section">
+        <h4>The path</h4>
+        <ul>
+          <li><a href="https://app.kea.today/funnel/reading.html">Discover yourself</a></li>
+          <li><a href="echos-wisdom.html">Echoes &amp; Wisdom</a></li>
+          <li><a href="energy-today-app.html">Energy Today app</a></li>
+          <li><a href="story.html">My Story</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="mailto:kea@kea.today">kea@kea.today</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 Kea Today. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var box = document.getElementById("step-today");
+  function ymdBangkok(d) {
+    return new Intl.DateTimeFormat("en-CA", {
+      timeZone: "Asia/Bangkok",
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit"
+    }).format(d);
+  }
+  function daysFrom(start, today) {
+    var a = start.split("-").map(Number);
+    var b = today.split("-").map(Number);
+    var s = Date.UTC(a[0], a[1] - 1, a[2]);
+    var t = Date.UTC(b[0], b[1] - 1, b[2]);
+    return Math.floor((t - s) / 86400000);
+  }
+  fetch("data/the-600-steps.json")
+    .then(function (r) { return r.json(); })
+    .then(function (data) {
+      var steps = data.steps || [];
+      if (!steps.length) throw new Error("empty");
+      var today = ymdBangkok(new Date());
+      var start = data.start || "2026-09-14";
+      var day = daysFrom(start, today);
+      if (day < 0) day = 0;
+      var step = steps[day % steps.length];
+      box.innerHTML =
+        '<p class="step-kicker">' + (step.room || "Today") + "</p>" +
+        '<p class="step-num">Step ' + step.n + "</p>" +
+        '<p class="step-line">' + step.text + "</p>" +
+        '<p class="step-back">Come back tomorrow.</p>';
+    })
+    .catch(function () {
+      box.innerHTML = '<p class="step-line">Stop for a moment. You are already here.</p><p class="step-back">Come back tomorrow.</p>';
+    });
+})();
+</script>
+</body>
+</html>
