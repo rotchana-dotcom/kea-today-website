@@ -353,6 +353,117 @@ img {
   font-style: italic;
 }
 
+.path-hero {
+  min-height: 42vh;
+}
+
+.path-body {
+  padding-top: 24px;
+}
+
+.path-wrap {
+  max-width: 640px;
+}
+
+.path-beat {
+  margin: 0 0 48px;
+  padding-bottom: 8px;
+}
+
+.path-beat p {
+  margin-bottom: 16px;
+}
+
+.path-kicker {
+  color: #00ff9c !important;
+  font-size: 0.85rem !important;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 10px !important;
+}
+
+.path-card {
+  background: #14161c;
+  border: 1px solid rgba(0, 255, 156, 0.12);
+  border-radius: 12px;
+  padding: 28px 24px 20px;
+}
+
+.path-card-focus {
+  background: linear-gradient(160deg, rgba(0, 255, 156, 0.08), #14161c 55%);
+  border-color: rgba(0, 255, 156, 0.28);
+  border-radius: 12px;
+  padding: 28px 24px 20px;
+}
+
+.path-step-num {
+  color: #00ff9c !important;
+  font-size: 0.9rem !important;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px !important;
+}
+
+.path-quote {
+  color: #ffffff !important;
+  font-size: 1.15rem !important;
+  font-style: italic;
+  line-height: 1.7 !important;
+}
+
+.path-model {
+  color: #00ff9c !important;
+  font-size: 1.2rem !important;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  line-height: 1.7 !important;
+  margin: 18px 0 24px !important;
+}
+
+.path-emphasis {
+  color: #ffffff !important;
+  font-size: 1.12rem !important;
+  font-weight: 600;
+}
+
+.path-note {
+  color: #9aa0aa !important;
+  font-size: 0.95rem !important;
+  font-style: italic;
+  border-left: 2px solid rgba(0, 255, 156, 0.35);
+  padding-left: 14px;
+}
+
+.path-questions {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+}
+
+.path-questions li {
+  color: #ffffff;
+  font-size: 1.15rem;
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 0 !important;
+}
+
+.path-back {
+  color: #00ff9c;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.path-back:hover {
+  text-decoration: underline;
+}
+
+.path-cta {
+  margin-top: 16px;
+  padding-top: 28px;
+  border-top: 1px solid rgba(0, 255, 156, 0.15);
+}
+
 .story-wrap blockquote {
   border-left: 3px solid #00ff9c;
   padding: 8px 0 8px 18px;
