@@ -12,7 +12,7 @@
   }
   if (!src) src = "website";
 
-  document.querySelectorAll('a[href*="funnel/reading.html"]').forEach(function (a) {
+  document.querySelectorAll('a[href*="funnel/reading"]').forEach(function (a) {
     try {
       var u = new URL(a.getAttribute("href"), location.href);
       if (!u.searchParams.get("src")) u.searchParams.set("src", src);
