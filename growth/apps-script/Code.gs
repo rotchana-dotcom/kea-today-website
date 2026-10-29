@@ -199,20 +199,19 @@ function fetchPlayConsole_() {
   if (token.error) return { error: token.error };
 
   var notes = [];
-  var products = playGet_(
+  var probe = playGet_(
     token.access,
     "https://androidpublisher.googleapis.com/androidpublisher/v3/applications/" +
       PLAY_PACKAGE +
-      "/inappproducts"
+      "/reviews?maxResults=1"
   );
-  if (products.code >= 400) {
+  if (probe.code >= 400) {
     return {
       error:
         "Android Publisher " +
-        products.code +
+        probe.code +
         " " +
-        String(products.body).slice(0, 280) +
-        " — Cloud Console: enable Google Play Android Developer API on project energy-today."
+        String(probe.body).slice(0, 280)
     };
   }
   notes.push("App linked: " + PLAY_PACKAGE);
@@ -298,7 +297,10 @@ function playGet_(access, url) {
 }
 
 function readPlayReports_(access, bucket) {
-  bucket = String(bucket).replace(/^gs:\/\//, "").replace(/\/$/, "");
+  bucket = String(bucket || "")
+    .replace(/^gs:\/\//, "")
+    .split("/")[0]
+    .trim();
   var ym = Utilities.formatDate(new Date(), "GMT", "yyyyMM");
   var out = { revenue: "", payers: "", installsLabel: "", installsGuess: null, note: "" };
   var salesName = "sales/salesreport_" + ym + ".csv";
