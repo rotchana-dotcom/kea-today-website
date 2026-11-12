@@ -274,6 +274,13 @@
       <label for="r-d3-3">What is the difference, in my body, between carrying something and letting it pass?</label>
       <textarea id="r-d3-3" data-reflect="d3-3"></textarea>
     </div>
+
+    <div class="jok-card">
+      <h3 style="margin-top:0">What comes after the crossing</h3>
+      <p>Tomorrow is your first crossing. After it, if you choose, the journey goes deeper: <strong>Crossing 2, Laying the foundations</strong>.</p>
+      <p>The human mind has three deceptions: <strong>money</strong>, <strong>the body</strong>, and <strong>magic</strong>. Not sins, not mistakes. Only where the mind gets caught.</p>
+      <p>It begins with money, because money is the first thing the mind uses to tell us who we are. Not the lack of it, not the love of it: money itself.</p>
+    </div>
     <div class="jok-walk"><button class="jok-btn" type="button" data-walk="d3">I have walked Day 3</button><p data-walk-note="d3"></p></div>
   </section>
 
@@ -297,9 +304,13 @@
     <p>When you know you are ready, not when you think you should be, the next crossing is waiting.</p>
 
     <div class="jok-card">
-      <h3 style="margin-top:0">Crossing 2: Laying the foundations</h3>
-      <p>Six moon weeks. Money, the body, and magic: the three deceptions of the human mind. It begins on the next new moon<span id="jk-nextmoon"></span>.</p>
-      <p class="jok-private">Joining opens soon. Until then, stay with these three days as long as you need.</p>
+      <h3 style="margin-top:0">Crossings 2 and 3</h3>
+      <p><strong>Laying the foundations:</strong> six moon weeks. Money, the body, and magic: the three deceptions of the human mind. Then judgment and understanding.</p>
+      <p><strong>Becoming:</strong> nine moons. Stillness, your birth day, beyond thought, the light, and the lotus.</p>
+      <p>You choose how to begin: <strong>follow the moon</strong> (the next new moon is<span id="jk-nextmoon"></span>), or <strong>begin the next morning</strong>. One step opens each morning.</p>
+      <p data-join-price class="jok-private">One payment for both crossings.</p>
+      <p data-join-wait class="jok-private">Write your crossing above, in your own words. Then the way on opens.</p>
+      <p data-join hidden><a class="jok-btn" href="https://app.kea.today/journey/join.html?src=crossing">Continue the journey</a></p>
     </div>
 
     <p>If you're not ready, that is also knowing. Stay with these three days as long as you need. They are yours.</p>
@@ -368,7 +379,7 @@
   var fmt = { day: "numeric", month: "long" };
   var now = Date.now(), nm = nextNewMoon(now);
   document.getElementById("jk-moonline").textContent = "Tonight: " + moonPhaseName(now) + " · next new moon " + nm.toLocaleDateString(undefined, fmt);
-  document.getElementById("jk-nextmoon").textContent = " (" + nm.toLocaleDateString(undefined, fmt) + ")";
+  document.getElementById("jk-nextmoon").textContent = " " + nm.toLocaleDateString(undefined, fmt);
 
   // ---- Steps: each opens the day after the one before was walked (all open if this device can't remember)
   var ORDER = ["start", "d1", "d2", "d3", "cross"];
@@ -436,6 +447,25 @@
     var v = get(k); if (v) ta.value = v;
     ta.addEventListener("input", function () { set(k, ta.value); });
   });
+
+  // ---- The way on: shown once the crossing is written in the student's own words
+  function crossingWritten() {
+    return ["x-1", "x-2"].some(function (k) { var v = get("r:" + k); return v && v.trim().length >= 3; });
+  }
+  function drawJoin() {
+    var ok = crossingWritten();
+    document.querySelector("[data-join]").hidden = !ok;
+    document.querySelector("[data-join-wait]").hidden = ok;
+  }
+  document.querySelectorAll('[data-reflect^="x-"]').forEach(function (ta) { ta.addEventListener("input", drawJoin); });
+  drawJoin();
+  fetch("https://app.kea.today/api/journey/offer").then(function (r) { return r.json(); }).then(function (o) {
+    if (!o || !o.ok) return;
+    var p = o.prices[o.suggestedCurrency] || o.prices.usd;
+    document.querySelector("[data-join-price]").textContent = o.founding
+      ? "Founding price " + p.now + " for the first 50 students (" + o.placesLeft + " places left), then " + p.full + ". One payment for both crossings."
+      : p.now + ", one payment for both crossings.";
+  }).catch(function () {});
 
   // ---- A soft bell at the end of a sitting
   function bell() {
