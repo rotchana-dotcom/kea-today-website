@@ -362,6 +362,21 @@
   function set(k, v) { try { localStorage.setItem(KEY + k, v); return true; } catch (e) { return false; } }
   var canStore = set("probe", "1");
 
+  // ---- Course steps recorded on the funnel (each counted once per browser on the server)
+  function track(type) {
+    try {
+      var vid = localStorage.getItem("kea_growth_vid") || "";
+      var src = sessionStorage.getItem("kea_src") || new URLSearchParams(location.search).get("src") || "website";
+      fetch("https://app.kea.today/api/funnel", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ type: type, src: src, visitor: vid }),
+        keepalive: true
+      }).catch(function () {});
+    } catch (e) {}
+  }
+  var STEP_EVENT = { start: "course_breath", d1: "course_day1", d2: "course_day2", d3: "course_day3" };
+
   // ---- Moon: next new moon (mean synodic month from the 6 Jan 2000 new moon; accurate to within about a day)
   var SYN = 29.530588853 * 864e5, EPOCH = Date.UTC(2000, 0, 6, 18, 14);
   function nextNewMoon(from) { var n = Math.floor((from - EPOCH) / SYN) + 1; return new Date(EPOCH + n * SYN); }
@@ -434,6 +449,7 @@
     b.addEventListener("click", function () {
       var s = b.getAttribute("data-walk");
       if (!get("walked:" + s)) set("walked:" + s, today());
+      if (STEP_EVENT[s]) track(STEP_EVENT[s]);
       refreshTabs();
     });
   });
@@ -452,12 +468,16 @@
   function crossingWritten() {
     return ["x-1", "x-2"].some(function (k) { var v = get("r:" + k); return v && v.trim().length >= 3; });
   }
+  var crossingSent = false;
   function drawJoin() {
     var ok = crossingWritten();
+    if (ok && !crossingSent) { crossingSent = true; track("course_crossing"); }
     document.querySelector("[data-join]").hidden = !ok;
     document.querySelector("[data-join-wait]").hidden = ok;
   }
   document.querySelectorAll('[data-reflect^="x-"]').forEach(function (ta) { ta.addEventListener("input", drawJoin); });
+  var joinLink = document.querySelector("[data-join] a");
+  if (joinLink) joinLink.addEventListener("click", function () { track("course_join_click"); });
   drawJoin();
   fetch("https://app.kea.today/api/journey/offer").then(function (r) { return r.json(); }).then(function (o) {
     if (!o || !o.ok) return;
