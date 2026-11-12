@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Journey of Knowing - Kea Today</title>
+<meta name="description" content="The Journey of Knowing: a course in finding what is already within you. Begin with three free days: the opening breath, the busy mind, listening, and the observer.">
+<link rel="stylesheet" href="styles.css">
+<style>
+  .jok { --jk-bg: #15171c; --jk-card: #1e2026; --jk-line: #2c2f37; --jk-text: #e6e8ec; --jk-soft: #b8bcc4; --jk-faint: #8a8f99; --jk-accent: #00ff9c; --jk-moon: #d9d4c3; color: var(--jk-text); }
+  .jok * { box-sizing: border-box; }
+  .jok-wrap { max-width: 760px; margin: 0 auto; padding: 0 16px; }
+  .jok-hero { text-align: center; padding: 72px 16px 40px; }
+  .jok-hero h1 { font-family: Georgia, 'Times New Roman', serif; font-weight: normal; font-size: clamp(2rem, 6vw, 3.2rem); letter-spacing: .02em; margin: 0 0 12px; }
+  .jok-hero .jok-sub { color: var(--jk-soft); font-size: 1.15rem; line-height: 1.7; margin: 0 auto; max-width: 560px; }
+  .jok-moonline { color: var(--jk-moon); font-size: .95rem; margin-top: 22px; opacity: .85; }
+  .jok h2 { font-family: Georgia, 'Times New Roman', serif; font-weight: normal; font-size: 1.7rem; margin: 0 0 14px; }
+  .jok h3 { font-weight: normal; color: var(--jk-accent); font-size: 1.1rem; letter-spacing: .04em; margin: 30px 0 10px; }
+  .jok p, .jok li { color: var(--jk-soft); line-height: 1.85; font-size: 1.05rem; }
+  .jok ol, .jok ul { padding-left: 1.3em; }
+  .jok blockquote { margin: 18px 0; padding: 18px 22px; border-left: 3px solid var(--jk-accent); background: var(--jk-card); border-radius: 0 12px 12px 0; font-family: Georgia, serif; font-size: 1.2rem; line-height: 1.6; color: var(--jk-text); }
+  .jok-card { background: var(--jk-card); border: 1px solid var(--jk-line); border-radius: 16px; padding: 26px; margin: 22px 0; }
+  .jok-voice { font-family: Georgia, serif; font-style: italic; }
+  .jok-voice p { color: var(--jk-text); }
+  .jok-note { font-size: .95rem; color: var(--jk-faint); border-top: 1px solid var(--jk-line); padding-top: 14px; margin-top: 18px; }
+  .jok-note p { font-size: .95rem; color: var(--jk-faint); }
+  .jok-crossings { display: grid; gap: 14px; grid-template-columns: 1fr; margin: 26px 0 10px; }
+  @media (min-width: 720px) { .jok-crossings { grid-template-columns: repeat(3, 1fr); } }
+  .jok-crossing { background: var(--jk-card); border: 1px solid var(--jk-line); border-radius: 14px; padding: 20px; }
+  .jok-crossing .jk-n { color: var(--jk-faint); font-size: .85rem; letter-spacing: .08em; text-transform: uppercase; }
+  .jok-crossing .jk-t { font-family: Georgia, serif; font-size: 1.25rem; margin: 6px 0; color: var(--jk-text); }
+  .jok-crossing .jk-d { color: var(--jk-soft); font-size: .95rem; line-height: 1.6; margin: 0; }
+  .jok-crossing .jk-tag { display: inline-block; margin-top: 10px; font-size: .82rem; padding: 3px 10px; border-radius: 99px; border: 1px solid var(--jk-line); color: var(--jk-faint); }
+  .jok-crossing.is-free .jk-tag { color: var(--jk-accent); border-color: var(--jk-accent); }
+  .jok-steps { display: flex; flex-wrap: wrap; gap: 8px; margin: 34px 0 6px; }
+  .jok-step { background: transparent; color: var(--jk-soft); border: 1px solid var(--jk-line); border-radius: 99px; padding: 9px 16px; font-size: .95rem; cursor: pointer; font-family: inherit; }
+  .jok-step[aria-selected="true"] { color: var(--jk-bg); background: var(--jk-accent); border-color: var(--jk-accent); }
+  .jok-step.is-walked::after { content: " ✓"; }
+  .jok-step.is-locked { opacity: .55; }
+  .jok-panel[hidden] { display: none; }
+  .jok-locked { text-align: center; padding: 40px 20px; color: var(--jk-soft); }
+  .jok-btn { display: inline-block; background: var(--jk-accent); color: #0d0f12; border: 0; border-radius: 99px; padding: 12px 24px; font-size: 1rem; cursor: pointer; font-family: inherit; text-decoration: none; }
+  .jok-btn.is-quiet { background: transparent; color: var(--jk-soft); border: 1px solid var(--jk-line); }
+  .jok-btn:focus-visible, .jok-step:focus-visible, .jok textarea:focus-visible { outline: 2px solid var(--jk-moon); outline-offset: 3px; }
+  .jok-breath { text-align: center; padding: 10px 0 4px; }
+  .jok-orb { width: 150px; height: 150px; margin: 18px auto; border-radius: 50%; background: radial-gradient(circle at 50% 45%, rgba(0,255,156,.35), rgba(0,255,156,.06) 70%); border: 1px solid rgba(0,255,156,.35); transform: scale(.6); transition-property: transform; transition-timing-function: ease-in-out; }
+  .jok-breath-word { font-family: Georgia, serif; font-size: 1.4rem; min-height: 1.6em; color: var(--jk-text); }
+  .jok-breath-count { color: var(--jk-faint); font-size: .95rem; min-height: 1.4em; }
+  @media (prefers-reduced-motion: reduce) { .jok-orb { transition: none !important; } }
+  .jok-timer { text-align: center; margin: 14px 0; }
+  .jok-timer-face { font-family: Georgia, serif; font-size: 2.2rem; color: var(--jk-text); margin: 10px 0; min-height: 1.3em; }
+  .jok-reflect label { display: block; color: var(--jk-text); margin: 16px 0 6px; line-height: 1.5; }
+  .jok-reflect textarea { width: 100%; min-height: 84px; background: var(--jk-bg); color: var(--jk-text); border: 1px solid var(--jk-line); border-radius: 10px; padding: 12px; font-size: 1rem; font-family: inherit; line-height: 1.6; resize: vertical; }
+  .jok-private { font-size: .88rem; color: var(--jk-faint); margin-top: 10px; }
+  .jok-walk { text-align: center; margin: 30px 0 10px; }
+  .jok-walk p { font-size: .95rem; }
+  .jok-end { text-align: center; padding: 30px 0 70px; }
+</style>
+</head>
+<body>
+
+<nav class="main-nav">
+  <div class="nav-container">
+    <a href="index.html" class="logo-link">
+      <img src="kea-logo.jpg" alt="Kea Logo" class="nav-logo">
+      <span class="logo-text">Kea Today</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="story.html">My Story</a></li>
+      <li><a href="path-of-knowing.html">Path of Knowing</a></li>
+      <li><a href="https://app.kea.today/funnel/reading.html">Reading</a></li>
+      <li><a href="shop.html">Shop</a></li>
+      <li><a href="energy-today-app.html">App</a></li>
+    </ul>
+    <a class="nav-lang" href="thai.html">ไทย</a>
+  </div>
+</nav>
+
+<main class="jok">
+
+<section class="jok-hero">
+  <h1>The Journey of Knowing</h1>
+  <p class="jok-sub">Not a teaching. Not a belief.<br>A quiet space to find what is already within you.</p>
+  <p class="jok-moonline" id="jk-moonline"></p>
+</section>
+
+<div class="jok-wrap">
+
+  <div class="jok-card jok-voice">
+    <p>I can't explain my path, and I'm not meant to. Yours is your own.</p>
+    <p>Everything in this journey I have lived myself. I'm not here to teach you or tell you what to think.</p>
+    <p>There was a time when everything was pure freedom, pure love, and everything happened through the thought. I'm not there now, but the feeling, the energy, is still here.</p>
+    <p>This journey is a space. What you find in it was already yours.</p>
+  </div>
+
+  <h2>Three crossings</h2>
+  <p>Every path is personal. No one can walk it for you, so this journey doesn't describe it. It only lights it, one crossing at a time. You cross not by thinking you are ready, but by knowing.</p>
+
+  <div class="jok-crossings">
+    <div class="jok-crossing is-free">
+      <div class="jk-n">Crossing 1</div>
+      <div class="jk-t">Finding yourself</div>
+      <p class="jk-d">The opening breath, the busy mind, listening, and the observer. Three days.</p>
+      <span class="jk-tag">Free, begin below</span>
+    </div>
+    <div class="jok-crossing">
+      <div class="jk-n">Crossing 2</div>
+      <div class="jk-t">Laying the foundations</div>
+      <p class="jk-d">Money, the body and magic: the three deceptions of the human mind. Then judgment and understanding. Six moon weeks.</p>
+      <span class="jk-tag">Opens after Crossing 1</span>
+    </div>
+    <div class="jok-crossing">
+      <div class="jk-n">Crossing 3</div>
+      <div class="jk-t">Becoming</div>
+      <p class="jk-d">Stillness, your birth day, beyond thought, the light, and the lotus. Nine moons.</p>
+      <span class="jk-tag">Opens after Crossing 2</span>
+    </div>
+  </div>
+
+  <div class="jok-steps" role="tablist" aria-label="Crossing 1">
+    <button class="jok-step" role="tab" data-step="start" aria-selected="true">The breath</button>
+    <button class="jok-step" role="tab" data-step="d1" aria-selected="false">Day 1</button>
+    <button class="jok-step" role="tab" data-step="d2" aria-selected="false">Day 2</button>
+    <button class="jok-step" role="tab" data-step="d3" aria-selected="false">Day 3</button>
+    <button class="jok-step" role="tab" data-step="cross" aria-selected="false">The crossing</button>
+  </div>
+
+  <!-- ===== Start step ===== -->
+  <section class="jok-panel" role="tabpanel" data-panel="start">
+    <h2>The start step: The breath</h2>
+    <p><em>Before Day 1, and at the start of every practice after it.</em></p>
+
+    <h3>How each day works</h3>
+    <ol>
+      <li><strong>A question.</strong> Read it slowly. There is no right answer.</li>
+      <li><strong>A quiet practice.</strong> It always begins with the opening breath.</li>
+      <li><strong>A daily task.</strong> Something small to carry into your day.</li>
+      <li><strong>A reflection.</strong> A few words of your own. Only you will read them.</li>
+    </ol>
+    <p>Don't try to get it right. Don't try to make anything happen. Relax, do the day's task, and let it come.</p>
+
+    <h3>Why we begin with the breath</h3>
+    <p>The human mind is covered in thought. Layer on layer: what we were taught, what we fear, what we expect, what we believe we already know. Under all that, it is hard to know anything at all.</p>
+    <p>In this journey's understanding, the <strong>pineal gland</strong>, a small gland deep in the centre of the head, is a window for inner knowing. When it is <strong>calcified</strong>, the window is covered, like glass under years of dust. What comes through it is no longer knowing. It is <strong>judgment</strong>. Quick labels: right, wrong, good, bad, true, nonsense.</p>
+    <p>Judgment feels like knowing. That is why it is so hard to see.</p>
+    <p>We can't clean the window by thinking about it. Thinking is more dust. We can't force it either.</p>
+    <p><strong>We begin with the breath.</strong> It is always here, it needs no belief, and it happens now, never in the past or the future. Each slow breath settles a little of the dust. Not all at once. Day by day, the way water clears when you stop stirring it.</p>
+
+    <div class="jok-card jok-breath" id="jk-breath">
+      <h3 style="margin-top:0">The opening breath</h3>
+      <p>Breathe in gently through the nose for <strong>3</strong>. Breathe out slowly for <strong>6</strong>, long and soft, like a sigh with no sound. Nine breaths. Don't hold the breath and don't push. If the counts feel too long, make them shorter.</p>
+      <div class="jok-orb" aria-hidden="true"></div>
+      <div class="jok-breath-word" aria-live="polite"></div>
+      <div class="jok-breath-count"></div>
+      <button class="jok-btn" type="button" data-breath>Begin the opening breath</button>
+    </div>
+
+    <p>A long, slow out-breath tells the body it is safe. The body softens, and the mind follows.</p>
+    <p><em>Optional: if you can, breathe at dawn or dusk, when the light is changing, the times the forest monks sit.</em></p>
+
+    <h3>The first task</h3>
+    <p>Before Day 1, do the opening breath once today, and once more before sleep.</p>
+
+    <div class="jok-reflect">
+      <h3>Reflection</h3>
+      <label for="r-start-1">Before the breath, how covered did my mind feel? After it?</label>
+      <textarea id="r-start-1" data-reflect="start-1"></textarea>
+      <label for="r-start-2">Did any judgment arise while I was breathing ("I'm doing this wrong", "this is pointless")? I don't need to fight it. Only notice it.</label>
+      <textarea id="r-start-2" data-reflect="start-2"></textarea>
+      <p class="jok-private">Your reflections stay on this device only. No one else can read them.</p>
+    </div>
+
+    <div class="jok-note">
+      <p><strong>A note on the body and science:</strong> the pineal gland is real. It makes melatonin, which helps us sleep and follow the rhythm of day and night. Calcification of the pineal gland is also real and is common, especially with age. Science has not shown that it causes judgment or blocks inner knowing. That part is this journey's spiritual understanding, offered for you to explore, not as medical fact.</p>
+      <p><strong>A gentle note:</strong> go slowly. If a practice ever feels frightening or too much, stop, open your eyes and come back another day. This journey is not medical or mental-health care. If you are struggling, please reach out to someone you trust or a professional.</p>
+    </div>
+
+    <div class="jok-walk"><button class="jok-btn" type="button" data-walk="start">I have breathed today</button><p data-walk-note="start"></p></div>
+  </section>
+
+  <!-- ===== Day 1 ===== -->
+  <section class="jok-panel" role="tabpanel" data-panel="d1" hidden>
+    <h2>Day 1: The busy mind</h2>
+    <blockquote>Is it better to speak, or to stay quiet?</blockquote>
+    <p>Most of us never ask. We speak because silence feels empty. We fill the quiet with words, with phones, with plans, with worry.</p>
+    <p>And then the mind asks its own questions: <em>Why can't I find peace? Where is the answer? Why do I feel lost, even when everything is fine?</em></p>
+    <p>Today you don't need answers. Only notice how busy it is in there.</p>
+
+    <h3>Quiet practice: 3 minutes</h3>
+    <ol>
+      <li>Sit comfortably. Let your hands rest.</li>
+      <li>Begin with the opening breath (nine breaths: in for 3, out for 6).</li>
+      <li>For three minutes, simply notice your thoughts arriving. Don't stop them. Don't follow them. Just notice: <em>a thought… another thought…</em></li>
+      <li>When the three minutes end, take one more slow breath and open your eyes.</li>
+    </ol>
+    <div class="jok-card jok-timer" data-timer="3"><div class="jok-timer-face" aria-live="polite"></div><button class="jok-btn" type="button">Sit for 3 minutes</button></div>
+
+    <h3>Daily task</h3>
+    <p>Once today, when you are about to speak, pause first. Ask yourself silently: <em>is this better spoken, or better left in silence?</em> Then choose.</p>
+
+    <div class="jok-reflect">
+      <h3>Reflection</h3>
+      <label for="r-d1-1">How busy was my mind in those three minutes?</label>
+      <textarea id="r-d1-1" data-reflect="d1-1"></textarea>
+      <label for="r-d1-2">When I paused before speaking, what did I notice?</label>
+      <textarea id="r-d1-2" data-reflect="d1-2"></textarea>
+      <label for="r-d1-3">One word for how I feel right now:</label>
+      <textarea id="r-d1-3" data-reflect="d1-3"></textarea>
+    </div>
+    <div class="jok-walk"><button class="jok-btn" type="button" data-walk="d1">I have walked Day 1</button><p data-walk-note="d1"></p></div>
+  </section>
+
+  <!-- ===== Day 2 ===== -->
+  <section class="jok-panel" role="tabpanel" data-panel="d2" hidden>
+    <h2>Day 2: Listening, hearing, knowing</h2>
+    <blockquote>Have you ever listened to someone, and not heard them at all?</blockquote>
+    <p>People listen but don't hear. Their mind is already somewhere else, preparing an answer, judging, waiting for their turn.</p>
+    <p>And we do it too.</p>
+    <p>There is a deeper kind of not-hearing: when we believe we <strong>already know</strong>. If I think I know, I stop listening. What I learned becomes a wall, and nothing new can come through.</p>
+    <p><em>Thinking you know</em> and <em>knowing</em> are not the same.</p>
+
+    <h3>Quiet practice: 6 minutes</h3>
+    <ol>
+      <li>Sit comfortably. The opening breath.</li>
+      <li>For six minutes, listen to the sounds around you: near, far, loud, quiet.</li>
+      <li>Try not to name them ("car", "bird", "fan"). Just hear them, as if for the first time.</li>
+      <li>If thoughts come, let them pass, and come back to listening.</li>
+      <li>One slow breath. Open your eyes.</li>
+    </ol>
+    <div class="jok-card jok-timer" data-timer="6"><div class="jok-timer-face" aria-live="polite"></div><button class="jok-btn" type="button">Sit for 6 minutes</button></div>
+
+    <h3>Daily task</h3>
+    <p>In one conversation today, listen without preparing your answer. Let the other person finish completely before you think about what to say.</p>
+
+    <div class="jok-reflect">
+      <h3>Reflection</h3>
+      <label for="r-d2-1">What did I hear in the six minutes that I usually don't?</label>
+      <textarea id="r-d2-1" data-reflect="d2-1"></textarea>
+      <label for="r-d2-2">In my conversation today, what did I hear when I stopped preparing my answer?</label>
+      <textarea id="r-d2-2" data-reflect="d2-2"></textarea>
+      <label for="r-d2-3">Is there something I am sure I know… that I have never really looked at?</label>
+      <textarea id="r-d2-3" data-reflect="d2-3"></textarea>
+    </div>
+    <div class="jok-walk"><button class="jok-btn" type="button" data-walk="d2">I have walked Day 2</button><p data-walk-note="d2"></p></div>
+  </section>
+
+  <!-- ===== Day 3 ===== -->
+  <section class="jok-panel" role="tabpanel" data-panel="d3" hidden>
+    <h2>Day 3: The Observer</h2>
+    <blockquote>When something enters your awareness, do you observe it, or do you straight away make it part of you?</blockquote>
+    <p>You can be aware of something without picking it up. You can know someone's belief without making it yours, someone's anger or sadness without carrying it, a situation without becoming part of it, a thought without believing it.</p>
+    <p><strong>Awareness does not mean taking part.</strong><br>You can observe without absorbing.<br>You can hear without accepting.<br>You can see without judging.</p>
+    <p>This is a quiet kind of freedom. You are allowed to know that something exists, and still remain yourself.</p>
+
+    <h3>Quiet practice: 9 minutes</h3>
+    <ol>
+      <li>Sit comfortably. The opening breath.</li>
+      <li>For nine minutes, watch your thoughts the way you might watch people walking past on a forest path. A thought comes. You see it. It walks on. You don't follow it down the path. You stay where you are.</li>
+      <li>If you find you have followed one, that's fine. Notice, smile, and come back to where you sit.</li>
+      <li>One slow breath. Open your eyes.</li>
+    </ol>
+    <div class="jok-card jok-timer" data-timer="9"><div class="jok-timer-face" aria-live="polite"></div><button class="jok-btn" type="button">Sit for 9 minutes</button></div>
+
+    <h3>Daily task</h3>
+    <p>Today, when you meet someone's strong feeling or opinion, notice it without picking it up. Silently say: <em>I see it. I don't need to carry it.</em></p>
+
+    <div class="jok-reflect">
+      <h3>Reflection</h3>
+      <label for="r-d3-1">What did I notice watching my thoughts walk past?</label>
+      <textarea id="r-d3-1" data-reflect="d3-1"></textarea>
+      <label for="r-d3-2">When I met someone's feeling today, did I pick it up, or let it pass?</label>
+      <textarea id="r-d3-2" data-reflect="d3-2"></textarea>
+      <label for="r-d3-3">What is the difference, in my body, between carrying something and letting it pass?</label>
+      <textarea id="r-d3-3" data-reflect="d3-3"></textarea>
+    </div>
+    <div class="jok-walk"><button class="jok-btn" type="button" data-walk="d3">I have walked Day 3</button><p data-walk-note="d3"></p></div>
+  </section>
+
+  <!-- ===== The first crossing ===== -->
+  <section class="jok-panel" role="tabpanel" data-panel="cross" hidden>
+    <h2>The first crossing</h2>
+    <p>You have walked three days. Three, then six, then nine minutes of stillness.</p>
+    <p>There is no test here. A test would check your thinking, and this journey is not about thinking.</p>
+    <p>Sit quietly once more. The opening breath. Then, in your own words:</p>
+
+    <div class="jok-reflect">
+      <label for="r-x-1">What has changed in me in these three days? Even something very small.</label>
+      <textarea id="r-x-1" data-reflect="x-1"></textarea>
+      <label for="r-x-2">What did I find that I didn't know was there?</label>
+      <textarea id="r-x-2" data-reflect="x-2"></textarea>
+    </div>
+
+    <p>And carry this question with you:</p>
+    <blockquote>If I stop judging what I meet, what might I become aware of that I couldn't see before?</blockquote>
+
+    <p>When you know you are ready, not when you think you should be, the next crossing is waiting.</p>
+
+    <div class="jok-card">
+      <h3 style="margin-top:0">Crossing 2: Laying the foundations</h3>
+      <p>Six moon weeks. Money, the body, and magic: the three deceptions of the human mind. It begins on the next new moon<span id="jk-nextmoon"></span>.</p>
+      <p class="jok-private">Joining opens soon. Until then, stay with these three days as long as you need.</p>
+    </div>
+
+    <p>If you're not ready, that is also knowing. Stay with these three days as long as you need. They are yours.</p>
+  </section>
+
+  <div class="jok-end">
+    <p class="jok-private">Linked with <a href="energy-today-app.html" style="color:inherit">Energy Today</a> · <a href="https://app.kea.today/funnel/reading.html" style="color:inherit">Your personal reading</a></p>
+  </div>
+
+</div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h4>Kea Today</h4>
+        <p>Energy, creativity, and inspiration for your growth.</p>
+      </div>
+      <div class="footer-section">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="journey-of-knowing.html">The Journey of Knowing</a></li>
+          <li><a href="echos-wisdom.html">Echos & Wisdom</a></li>
+          <li><a href="the-600-steps.html">Today’s step</a></li>
+          <li><a href="energy-today-app.html">Energy Today App</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h4>Legal</h4>
+        <ul>
+          <li><a href="privacy-policy.html">Privacy Policy</a></li>
+          <li><a href="terms.html">Terms of Service</a></li>
+          <li><a href="mailto:hello@kea.today">hello@kea.today</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2026 KEA TODAY LIMITED. All rights reserved.</p>
+      <p>Kea.humour, Kiwi in Thai, Echoes &amp; Wisdom, Mindfulness.quotes and Energy Today are brands of KEA TODAY LIMITED, a New Zealand company (company number 9469640, NZBN 9429054063686).</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var KEY = "jok:";
+  function get(k) { try { return localStorage.getItem(KEY + k); } catch (e) { return null; } }
+  function set(k, v) { try { localStorage.setItem(KEY + k, v); return true; } catch (e) { return false; } }
+  var canStore = set("probe", "1");
+
+  // ---- Moon: next new moon (mean synodic month from the 6 Jan 2000 new moon; accurate to within about a day)
+  var SYN = 29.530588853 * 864e5, EPOCH = Date.UTC(2000, 0, 6, 18, 14);
+  function nextNewMoon(from) { var n = Math.floor((from - EPOCH) / SYN) + 1; return new Date(EPOCH + n * SYN); }
+  function moonPhaseName(now) {
+    var age = ((now - EPOCH) % SYN + SYN) % SYN / 864e5;
+    if (age < 1.5 || age > 28) return "new moon";
+    if (age < 6.4) return "waxing crescent";
+    if (age < 8.4) return "first quarter";
+    if (age < 13.8) return "waxing moon";
+    if (age < 15.8) return "full moon";
+    if (age < 21.1) return "waning moon";
+    if (age < 23.1) return "last quarter";
+    return "waning crescent";
+  }
+  var fmt = { day: "numeric", month: "long" };
+  var now = Date.now(), nm = nextNewMoon(now);
+  document.getElementById("jk-moonline").textContent = "Tonight: " + moonPhaseName(now) + " · next new moon " + nm.toLocaleDateString(undefined, fmt);
+  document.getElementById("jk-nextmoon").textContent = " (" + nm.toLocaleDateString(undefined, fmt) + ")";
+
+  // ---- Steps: each opens the day after the one before was walked (all open if this device can't remember)
+  var ORDER = ["start", "d1", "d2", "d3", "cross"];
+  function today() { var d = new Date(); return d.getFullYear() + "-" + (d.getMonth() + 1) + "-" + d.getDate(); }
+  function isOpen(step) {
+    if (!canStore) return true;
+    var i = ORDER.indexOf(step);
+    if (i <= 0) return true;
+    var prev = get("walked:" + ORDER[i - 1]);
+    return !!prev && prev !== today();
+  }
+  var tabs = Array.prototype.slice.call(document.querySelectorAll(".jok-step"));
+  function refreshTabs() {
+    tabs.forEach(function (t) {
+      var s = t.getAttribute("data-step");
+      t.classList.toggle("is-walked", !!get("walked:" + s));
+      t.classList.toggle("is-locked", !isOpen(s));
+    });
+    ORDER.forEach(function (s) {
+      var note = document.querySelector('[data-walk-note="' + s + '"]');
+      if (!note) return;
+      var w = get("walked:" + s);
+      if (!w) { note.textContent = ""; return; }
+      var next = ORDER[ORDER.indexOf(s) + 1];
+      note.textContent = w === today() ? "Walked today. The next step opens tomorrow. Let today settle." : "Walked. The next step is open when you are ready.";
+      if (!canStore) note.textContent = "";
+    });
+  }
+  function show(step) {
+    tabs.forEach(function (t) { t.setAttribute("aria-selected", t.getAttribute("data-step") === step ? "true" : "false"); });
+    document.querySelectorAll(".jok-panel").forEach(function (p) {
+      var mine = p.getAttribute("data-panel") === step;
+      p.hidden = !mine;
+      var lock = p.querySelector(".jok-locked");
+      if (mine && !isOpen(step)) {
+        if (!lock) {
+          lock = document.createElement("div");
+          lock.className = "jok-locked";
+          lock.innerHTML = "<p>This step opens the day after the one before it is walked.</p><p>There is no hurry. Stay with where you are.</p>";
+          p.insertBefore(lock, p.firstChild);
+        }
+        Array.prototype.forEach.call(p.children, function (c) { if (c !== lock) c.style.display = "none"; });
+      } else if (lock) {
+        lock.remove();
+        Array.prototype.forEach.call(p.children, function (c) { c.style.display = ""; });
+      }
+    });
+    set("tab", step);
+  }
+  tabs.forEach(function (t) { t.addEventListener("click", function () { show(t.getAttribute("data-step")); window.scrollTo({ top: t.offsetTop - 90, behavior: "smooth" }); }); });
+  document.querySelectorAll("[data-walk]").forEach(function (b) {
+    b.addEventListener("click", function () {
+      var s = b.getAttribute("data-walk");
+      if (!get("walked:" + s)) set("walked:" + s, today());
+      refreshTabs();
+    });
+  });
+  refreshTabs();
+  var saved = get("tab");
+  show(saved && ORDER.indexOf(saved) >= 0 ? saved : "start");
+
+  // ---- Reflections: saved on this device as the student types
+  document.querySelectorAll("[data-reflect]").forEach(function (ta) {
+    var k = "r:" + ta.getAttribute("data-reflect");
+    var v = get(k); if (v) ta.value = v;
+    ta.addEventListener("input", function () { set(k, ta.value); });
+  });
+
+  // ---- A soft bell at the end of a sitting
+  function bell() {
+    try {
+      var A = window.AudioContext || window.webkitAudioContext; if (!A) return;
+      var ctx = new A(), o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = "sine"; o.frequency.value = 432;
+      g.gain.setValueAtTime(0.0001, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.25, ctx.currentTime + 0.05);
+      g.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + 4);
+      o.connect(g); g.connect(ctx.destination); o.start(); o.stop(ctx.currentTime + 4.1);
+    } catch (e) {}
+  }
+
+  // ---- The opening breath: in 3, out 6, nine rounds
+  var box = document.getElementById("jk-breath");
+  var orb = box.querySelector(".jok-orb"), word = box.querySelector(".jok-breath-word"), count = box.querySelector(".jok-breath-count"), bb = box.querySelector("[data-breath]");
+  var timers = [];
+  function clearAll() { timers.forEach(clearTimeout); timers = []; }
+  function at(ms, fn) { timers.push(setTimeout(fn, ms)); }
+  function stopBreath(done) {
+    clearAll();
+    orb.style.transitionDuration = "1.5s"; orb.style.transform = "scale(.6)";
+    word.textContent = done ? "Let the breath return to its own pace." : "";
+    count.textContent = done ? "Sit a moment. Is there a little more space?" : "";
+    bb.textContent = done ? "Breathe again" : "Begin the opening breath";
+    bb.dataset.running = "";
+  }
+  bb.addEventListener("click", function () {
+    if (bb.dataset.running) { stopBreath(false); return; }
+    bb.dataset.running = "1"; bb.textContent = "Stop";
+    var t = 0;
+    for (var i = 1; i <= 9; i++) {
+      (function (n, start) {
+        at(start, function () { orb.style.transitionDuration = "3s"; orb.style.transform = "scale(1)"; word.textContent = "Breathe in…"; count.textContent = "Breath " + n + " of 9"; });
+        at(start + 3000, function () { orb.style.transitionDuration = "6s"; orb.style.transform = "scale(.6)"; word.textContent = "…and out, slowly"; });
+      })(i, t);
+      t += 9000;
+    }
+    at(t, function () { stopBreath(true); bell(); });
+  });
+
+  // ---- Sitting timers (3, 6, 9 minutes)
+  document.querySelectorAll("[data-timer]").forEach(function (box) {
+    var mins = Number(box.getAttribute("data-timer")), face = box.querySelector(".jok-timer-face"), btn = box.querySelector("button");
+    var label = btn.textContent, iv = null, end = 0;
+    function draw() {
+      var left = Math.max(0, Math.round((end - Date.now()) / 1000));
+      face.textContent = Math.floor(left / 60) + ":" + ("0" + (left % 60)).slice(-2);
+      if (left === 0) { clearInterval(iv); iv = null; btn.textContent = label; face.textContent = "Rest. One slow breath. Open your eyes."; bell(); }
+    }
+    btn.addEventListener("click", function () {
+      if (iv) { clearInterval(iv); iv = null; btn.textContent = label; face.textContent = ""; return; }
+      end = Date.now() + mins * 60000; btn.textContent = "Stop"; draw(); iv = setInterval(draw, 1000);
+    });
+  });
+})();
+</script>
+<script src="track-src.js"></script>
+</body>
+</html>
