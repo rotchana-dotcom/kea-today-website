@@ -55,6 +55,9 @@
   .jok-walk { text-align: center; margin: 30px 0 10px; }
   .jok-walk p { font-size: .95rem; }
   .jok-end { text-align: center; padding: 30px 0 70px; }
+  .jok-remind-row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin: 10px 0; }
+  .jok-remind-row input { flex: 1 1 220px; min-width: 0; background: var(--jk-bg); color: var(--jk-text); border: 1px solid var(--jk-line); border-radius: 99px; padding: 12px 16px; font-size: 1rem; font-family: inherit; }
+  .jok-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 </style>
 </head>
 <body>
@@ -177,6 +180,17 @@
     </div>
 
     <div class="jok-walk"><button class="jok-btn" type="button" data-walk="start">I have breathed today</button><p data-walk-note="start"></p></div>
+
+    <div class="jok-card" id="jk-remind" hidden>
+      <h3 style="margin-top:0">Walk with a reminder?</h3>
+      <p>Each step opens the next morning. If you like, we'll send you one short email when it does, for these three days and the crossing. Nothing else.</p>
+      <form id="jk-remind-form" class="jok-remind-row" novalidate>
+        <label for="jk-remind-email" class="jok-sr">Your email</label>
+        <input id="jk-remind-email" type="email" autocomplete="email" placeholder="your@email.com">
+        <button class="jok-btn" type="submit">Remind me</button>
+      </form>
+      <p class="jok-private" id="jk-remind-msg" role="status">One email a morning for 4 days. Stop any time with one tap. Your reflections are never sent; they stay on your device.</p>
+    </div>
   </section>
 
   <!-- ===== Day 1 ===== -->
@@ -377,6 +391,58 @@
   }
   var STEP_EVENT = { start: "course_breath", d1: "course_day1", d2: "course_day2", d3: "course_day3" };
 
+  // ---- Optional morning reminders (shown once, after the first breath; owner-approved wording 12 Nov)
+  var API = "https://app.kea.today/api/signup/course";
+  function remindToken() { return get("remind-token"); }
+  function remindStep(step) {
+    var t = remindToken();
+    if (!t) return;
+    try {
+      fetch(API + "/step", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ token: t, step: step }), keepalive: true }).catch(function () {});
+    } catch (e) {}
+  }
+  function walkedTimes() {
+    // Walked days are stored as local dates; noon that day is enough for "the next morning".
+    var out = {};
+    ["start", "d1", "d2", "d3"].forEach(function (s) {
+      var d = get("walked:" + s);
+      if (!d) return;
+      var p = d.split("-");
+      out[s] = new Date(+p[0], +p[1] - 1, +p[2], 12).getTime();
+    });
+    return out;
+  }
+  function drawRemind() {
+    var box = document.getElementById("jk-remind");
+    if (box) box.hidden = !canStore || !!remindToken() || !get("walked:start");
+  }
+  var remindForm = document.getElementById("jk-remind-form");
+  if (remindForm) remindForm.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var input = document.getElementById("jk-remind-email"), msg = document.getElementById("jk-remind-msg");
+    var email = input.value.trim();
+    if (!/^\S+@\S+\.\S+$/.test(email)) { msg.textContent = "Please enter a valid email."; return; }
+    var src = "website";
+    try { src = sessionStorage.getItem("kea_src") || new URLSearchParams(location.search).get("src") || "website"; } catch (x) {}
+    remindForm.querySelector("button").disabled = true;
+    fetch(API, {
+      method: "POST", headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email: email, src: src, tz: new Date().getTimezoneOffset(), walked: walkedTimes() })
+    }).then(function (r) { return r.json(); }).then(function (j) {
+      if (j.ok && j.token) {
+        set("remind-token", j.token);
+        remindForm.hidden = true;
+        msg.textContent = "Done. Your first reminder comes tomorrow morning.";
+      } else {
+        msg.textContent = j.error || "Something went wrong. Please try again.";
+        remindForm.querySelector("button").disabled = false;
+      }
+    }).catch(function () {
+      msg.textContent = "Couldn't reach the server. Please try again.";
+      remindForm.querySelector("button").disabled = false;
+    });
+  });
+
   // ---- Moon: next new moon (mean synodic month from the 6 Jan 2000 new moon; accurate to within about a day)
   var SYN = 29.530588853 * 864e5, EPOCH = Date.UTC(2000, 0, 6, 18, 14);
   function nextNewMoon(from) { var n = Math.floor((from - EPOCH) / SYN) + 1; return new Date(EPOCH + n * SYN); }
@@ -450,10 +516,13 @@
       var s = b.getAttribute("data-walk");
       if (!get("walked:" + s)) set("walked:" + s, today());
       if (STEP_EVENT[s]) track(STEP_EVENT[s]);
+      remindStep(s);
+      drawRemind();
       refreshTabs();
     });
   });
   refreshTabs();
+  drawRemind();
   var saved = get("tab");
   show(saved && ORDER.indexOf(saved) >= 0 ? saved : "start");
 
@@ -471,7 +540,7 @@
   var crossingSent = false;
   function drawJoin() {
     var ok = crossingWritten();
-    if (ok && !crossingSent) { crossingSent = true; track("course_crossing"); }
+    if (ok && !crossingSent) { crossingSent = true; track("course_crossing"); remindStep("crossing"); }
     document.querySelector("[data-join]").hidden = !ok;
     document.querySelector("[data-join-wait]").hidden = ok;
   }
