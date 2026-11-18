@@ -118,11 +118,11 @@
         <p class="last-updated"><strong>Last updated:</strong> 18 November 2026</p>
 
         <div class="summary">
-            <p><strong>In short:</strong> Your name, birthday, journal, calendar, and optional Health Connect import stay on your phone. If you use AI, weather, or we record that you opened the app, a small amount of data goes to our Energy Today servers or weather services. Google Play handles Pro payments. We do not sell your data. This is not a medical app.</p>
+            <p><strong>In short:</strong> Your name, birthday, journal, calendar, and optional Health Connect import stay on your phone. If you ask the Energy Coach or an AI box, your question and a short summary of your last 7 days in the app go to our server and to an AI service that writes the reply. Weather and an app-open record also use our servers or weather services. Google Play handles Pro payments; Stripe handles payments on kea.today. We do not sell your data. This is not a medical app.</p>
         </div>
 
         <h2>Who we are</h2>
-        <p>Energy Today (“we”, “our”, or “us”) is a daily check-in and timing app from Kea Today. Package name on Google Play: <strong>com.kea.energytoday</strong>.</p>
+        <p>Energy Today is a daily check-in and timing app from Kea Today. Kea Today is operated by <strong>KEA TODAY LIMITED</strong>, a New Zealand company (company number 9469640) — “we”, “our”, or “us” in this policy. We are responsible for your personal information under New Zealand’s Privacy Act 2020, and we also follow Thailand’s Personal Data Protection Act (PDPA) for people in Thailand. Package name on Google Play: <strong>com.kea.energytoday</strong>.</p>
         <p>This policy covers the Energy Today mobile app and the related pages on <a href="https://www.kea.today">kea.today</a>.</p>
 
         <h2>Not a medical device</h2>
@@ -155,8 +155,16 @@
 
         <h2>What can leave the phone</h2>
 
-        <h3>AI / coach boxes</h3>
-        <p>If you type into an AI or insight box, that text (and the context needed to answer) is sent to our Energy Today backend so a reply can come back. Hosted at energy-today-backend-4.onrender.com. We do not use those messages for ads.</p>
+        <h3>Energy Coach and AI boxes</h3>
+        <p>When you ask the Energy Coach a question, or open an AI insight box, the app sends to our Energy Today backend (hosted by Render at energy-today-backend-4.onrender.com, in the United States):</p>
+        <ul>
+            <li>your question (if you typed one) and the date it is about</li>
+            <li>the day’s energy numbers the app already shows you, and your profile style (for example life-path and personality style numbers, love languages, and feng shui directions if you chose them) — <strong>not</strong> your name or full birthday</li>
+            <li>a short summary of your last 7 days in the app: check-ins and mood, sleep hours, food rhythm, weight direction (up, down or steady), menstrual-cycle days if you log them, meditation, habits, goals, workouts, business log counts, and the two latest journal notes (shortened)</li>
+            <li>today’s weather for your area, if weather is on</li>
+            <li>your calendar for the next 7 days, <strong>only if</strong> you switched on “Let the coach see my calendar” (see below)</li>
+        </ul>
+        <p>Our backend passes this to an AI service that writes the reply: Manus Forge (using Google’s Gemini model) or OpenAI. They process it only to write the answer. Health Connect and watch data, photos, food names and sleep or food notes are <strong>never</strong> sent. We do not use any of this for ads.</p>
 
         <h3>App open log</h3>
         <p>When you reach Today with a profile, the app may send a hashed id (from name + birthday) and your first name to the same backend, so we can see that the app is being used. It does not send your full birthday or journal.</p>
@@ -172,7 +180,9 @@
         <p><strong>Energy Coach, only if you turn it on:</strong> with “Let the coach see my calendar” switched on in Settings (it is off unless you turn it on), the times and titles of your next 7 days of events are sent with your question to our Energy Today backend so the coach can answer about them. They are used only to answer that question and are not used for ads. Turn the switch off at any time to stop this. You can remove calendar access in Android Settings.</p>
 
         <h3>Website and email</h3>
-        <p>If you write to kea@kea.today or hello@kea.today, or buy a letter on kea.today, that email and the details you typed are used to reply and deliver what you asked for.</p>
+        <p>If you write to kea@kea.today or hello@kea.today, we use your email and message to reply.</p>
+        <p><strong>Readings on kea.today:</strong> the free reading is worked out on the page and nothing is sent. When you choose a reading letter, the page sends us your name, birthday and email straight away (even before you pay, so a started order isn’t lost), plus the topic you pick. Stripe takes the payment (we never see your card number). Our server at app.kea.today, which runs on a computer we operate in Thailand, asks OpenAI to write your letter from those details, and Resend emails it to you. We keep the order (name, email, birthday, topic, the letter and the Stripe payment reference) so we can deliver it again or help with a problem. The reading form also keeps a simple visit log (kind of browser and which link you came from) with no IP address and no name.</p>
+        <p><strong>The Journey of Knowing course:</strong> if you join a paid part, Stripe takes the payment and we keep your email, the date you joined and where you are in the course, so the right step opens each day.</p>
         <p>If you ask for a reminder on The Journey of Knowing, or ask us to email your free reading, we keep your email address, which sign-up it was, where you came from (for example a TikTok link) and the date. We use it only to send what you asked for: one short email the morning each next step opens (and one note about the paid crossings), or your reading once. Your course reflections are never sent; they stay on your device. Every email has a one-tap link to stop them, and stopping works at once.</p>
 
         <h2>What we do not do</h2>
@@ -181,6 +191,18 @@
             <li>We do not use Health Connect data for advertising</li>
             <li>We do not use health data for employment or insurance decisions</li>
             <li>We do not run advertising networks inside the Energy Today app</li>
+        </ul>
+
+        <h2>Who helps us run this (service providers)</h2>
+        <p>We share only what each one needs to do its job, and never to sell it:</p>
+        <ul>
+            <li><strong>Render</strong> — hosts the Energy Today backend (United States)</li>
+            <li><strong>Manus Forge / Google Gemini, OpenAI</strong> — write AI replies and reading letters</li>
+            <li><strong>Google Play</strong> — Pro subscriptions in the app</li>
+            <li><strong>Stripe</strong> — payments on kea.today</li>
+            <li><strong>Resend</strong> — sends reading letters and reminder emails</li>
+            <li><strong>Open-Meteo, ip-api.com</strong> — weather and rough location for weather</li>
+            <li><strong>Cloudflare</strong> — hosts www.kea.today</li>
         </ul>
 
         <h2>Permissions the app may ask for</h2>
@@ -200,14 +222,18 @@
             <li>AI messages on the backend: only as long as needed to answer and keep the service working</li>
             <li>App-open log: a short operational record (hashed id + first name)</li>
             <li>Play purchases: kept by Google Play under Google’s terms</li>
+            <li>Reading orders and course sign-ups: while you use them and for up to 7 years for tax and payment records; reminder emails stop as soon as you unsubscribe</li>
         </ul>
         <p>To ask us to delete what we hold on the backend, follow <a href="https://www.kea.today/delete-data.html">Delete your Energy Today data</a> or email <a href="mailto:kea@kea.today">kea@kea.today</a> from the address you used, and clear data in Settings as well.</p>
+
+        <h2>Your rights</h2>
+        <p>You can ask us what personal information we hold about you, ask us to correct it, or ask us to delete it, by emailing <a href="mailto:kea@kea.today">kea@kea.today</a>. We will reply within 20 working days. Most of what the app knows about you is only on your phone, and you can see, change or delete it there yourself. If you are not happy with our answer, you can complain to the New Zealand Privacy Commissioner (privacy.org.nz) or, in Thailand, to the Personal Data Protection Committee (pdpc.or.th).</p>
 
         <h2>Children</h2>
         <p>Energy Today is not for children under 13. We do not knowingly collect their data.</p>
 
         <h2>International</h2>
-        <p>Servers may be outside your country (including the United States). If you use AI, weather, or the app-open log, that data may cross borders. On-device data does not leave until you use those features.</p>
+        <p>Servers may be outside your country: the Energy Today backend and AI services are in the United States, and app.kea.today runs in Thailand. If you use AI, weather, the app-open log or buy on kea.today, that data may cross borders. On-device data does not leave until you use those features.</p>
 
         <h2>Changes</h2>
         <p>We will update the date at the top of this page when the policy changes. The live page is always <a href="https://www.kea.today/privacy-policy.html">https://www.kea.today/privacy-policy.html</a>.</p>
