@@ -54,7 +54,7 @@
       page: "",
       youtube: "https://www.youtube.com/@SpokenAndSoItIs",
       facebook: "https://www.facebook.com/profile.php?id=1471201872737756",
-      instagram: "",
+      instagram: "https://www.instagram.com/spokenandsoitis/",
       tiktok: ""
     }
   ];
