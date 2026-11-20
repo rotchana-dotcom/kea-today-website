@@ -34,7 +34,7 @@
       page: "https://www.kea.today/echos-wisdom.html",
       youtube: "https://www.youtube.com/@EchosandWisdom",
       facebook: "https://www.facebook.com/profile.php?id=109822684772325",
-      instagram: "",
+      instagram: "https://www.instagram.com/echos.and.wisdom/",
       tiktok: ""
     },
     {
@@ -53,7 +53,7 @@
       th: "ที่ที่คำพูดกลายเป็นความจริง วันละหนึ่งคำ",
       page: "",
       youtube: "https://www.youtube.com/@SpokenAndSoItIs",
-      facebook: "",
+      facebook: "https://www.facebook.com/profile.php?id=1471201872737756",
       instagram: "",
       tiktok: ""
     }
