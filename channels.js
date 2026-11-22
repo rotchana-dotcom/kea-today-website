@@ -51,7 +51,7 @@
       id: "spoken", name: "Spoken And So It Is",
       en: "Where words become reality: one word a day",
       th: "ที่ที่คำพูดกลายเป็นความจริง วันละหนึ่งคำ",
-      page: "",
+      page: "https://www.kea.today/spoken.html",
       youtube: "https://www.youtube.com/@SpokenAndSoItIs",
       facebook: "https://www.facebook.com/profile.php?id=1471201872737756",
       instagram: "https://www.instagram.com/spokenandsoitis/",
